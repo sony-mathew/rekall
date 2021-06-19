@@ -1,0 +1,58 @@
+{
+  "name": "wheel",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  },
+  "env": {
+    "SECRET_KEY_BASE":{
+      "generator": "secret"
+    },
+   "RACK_ENV": {
+      "value": "heroku"
+    },
+    "RAILS_ENV": {
+      "value": "heroku"
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "required": false
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": false
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "LOG_LEVEL": {
+      "value": "DEBUG"
+    },
+    "YARN_PRODUCTION": {
+      "value": "true"
+    },
+    "YARN_CACHE": {
+      "value": "true"
+    },
+    "NODE_MODULES_CACHE": {
+      "value": "true"
+    }
+  },
+  "formation": { },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "12"
+      }
+    },
+    {
+      "plan": "heroku-redis:hobby-dev"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}

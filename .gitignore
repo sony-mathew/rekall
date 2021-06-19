@@ -54,3 +54,103 @@ build-iPhoneSimulator/
 
 # Used by RuboCop. Remote config files pulled in from inherit_from directive.
 # .rubocop-https?--*
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore database.yml file
+/config/database.yml
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp
+/db/backups
+public/uploads
+*.DS_Store
+coverage
+.*swp
+/uploads/*
+
+# Ignore node packages
+node_modules
+
+# rails specific ignores
+storage/
+vendor/
+test/reports
+/public/packs
+/public/assets
+/public/packs-test
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+#Ignore environment variables
+/.env
+
+#---------------------------------------#
+# IDEs & Editors Ignores                #
+#---------------------------------------#
+# Sublime Text
+*.sublime*
+.sublime-gulp.cache
+# JetBrains IDEs
+.idea/
+# VIM
+## Session
+Session.vim
+Sessionx.vim
+## Temporary
+.netrwhist
+## Backup and swap files
+*~
+## Auto-generated tag files
+tags
+# Vscode
+.vscode/*
+.vscode-test
+!.vscode/tasks.json #included for running custom tasks
+!.vscode/launch.json #included for common debugger options
+
+#---------------------------------------#
+# Linux Ignores                         #
+#---------------------------------------#
+# directory preferences
+.directory
+
+#---------------------------------------#
+# OSX Ignores                           #
+#---------------------------------------#
+.DS_Store
+.AppleDouble
+.LSOverride
+.localized
+
+#---------------------------------------#
+# Windows Ignores                       #
+#---------------------------------------#
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+# Folder config file
+Desktop.ini
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+#---------------------------------------#
+# Tools and Package specific ignores    #
+#---------------------------------------#
+.eslintcache
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+.yarnrc
+yarn-1.22.5.cjs
+yarn-1.22.5.js

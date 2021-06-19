@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "fileutils"
+include FileUtils
+
+APP_ROOT = File.expand_path("..", __dir__)
+
+def system!(cmd, error_message = nil)
+  system(cmd) || begin
+    if error_message.nil?
+      msg = ("\n== Command #{cmd} failed ==")
+    else
+      msg = "\n== Command #{cmd} failed == with error message #{error_message}"
+    end
+    abort msg
+  end
+end
+
+chdir APP_ROOT do
+  puts "== Installing dependencies =="
+  cmd = "gem install bundler --conservative"
+  puts "Executing #{cmd}"
+  system! cmd
+  system("bundle check") || system!("bundle install")
+
+  puts "\n== Executing yarn =="
+  system!("bin/yarn")
+
+  puts "\n== Checking if config/database.yml is present =="
+  unless File.exist?("config/database.yml")
+    system! "cp config/database.yml.postgresql config/database.yml"
+  end
+
+  puts "\n== Executing rake setup =="
+  system! "bundle exec rake setup"
+
+  puts "\n== Removing logs and tempfiles =="
+  system! "bin/rails log:clear tmp:clear"
+
+  puts"\n== Start the application using following command =="
+  puts"\n bundle exec rails server"
+end
