@@ -40,6 +40,8 @@ Rails.application.routes.draw do
           post 'bulk_delete'
         end
       end
+
+      resources :api_sources, only: [:index, :create, :show, :update, :destroy]
     end
   end
 
