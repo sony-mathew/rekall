@@ -11,10 +11,13 @@ import NewApiSourcePane from "./NewApiSourcePane";
 
 const ApiSources = () => {
   const [loading, setLoading] = useState(true);
-  const [showNewApiSourcePane, setShowNewApiSourcePane] = useState(false);
+  const [showApiSourcePane, setShowApiSourcePane] = useState(false);
+  const [currentApiSource, setCurrrentApiSource] = useState(false);
+
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [apiSources, setApiSources] = useState([]);
+  
 
   useEffect(() => {
     fetchApiSources();
@@ -41,7 +44,7 @@ const ApiSources = () => {
         title="Api Sources"
         actionBlock={
           <Button
-            onClick={() => setShowNewApiSourcePane(true)}
+            onClick={() => { setCurrrentApiSource(false); setShowApiSourcePane(true); } }
             label="Add New Api Source"
             icon="ri-add-line"
           />
@@ -58,6 +61,8 @@ const ApiSources = () => {
           />
           <ApiSourcesTable
             apiSources={apiSources}
+            setCurrrentApiSource={setCurrrentApiSource}
+            showPane={setShowApiSourcePane}
           />
         </>
       ) : (
@@ -65,14 +70,16 @@ const ApiSources = () => {
           image={EmptyNotesListImage}
           title="Looks like you don't have any Api Sources!"
           subtitle="Add your sources to send search queries to them."
-          primaryAction={() => setShowNewApiSourcePane(true)}
+          primaryAction={() => setShowApiSourcePane(true)}
           primaryActionLabel="Add New Api Source"
         />
       )}
       <NewApiSourcePane
-        showPane={showNewApiSourcePane}
-        setShowPane={setShowNewApiSourcePane}
+        showPane={showApiSourcePane}
+        setShowPane={setShowApiSourcePane}
         fetchApiSources={fetchApiSources}
+        apiSource={currentApiSource}
+        setCurrrentApiSource={setCurrrentApiSource}
       />
       {/* showDeleteAlert && (
         <DeleteAlert

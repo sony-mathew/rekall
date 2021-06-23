@@ -5,24 +5,35 @@ import { Input, Textarea } from "neetoui/formik";
 import { Button } from "neetoui";
 import apiSourceService from "apis/apiSourceService";
 
-export default function NewApiSourceForm({ onClose, refetch }) {
+export default function NewApiSourceForm({ onClose, refetch, apiSource }) {
   const handleSubmit = async values => {
     try {
-      await apiSourceService.create(values);
+      if(apiSource) {
+        await apiSourceService.update(apiSource.id, values);
+      } else {
+        await apiSourceService.create(values);
+      }
       refetch();
       onClose();
     } catch (err) {
       logger.error(err);
     }
   };
+
+  const getInitialValues = () => {
+    const initialValues = apiSource || {
+      name: "",
+      host: "",
+      environment: "",
+      request: []
+    };
+
+    return initialValues;
+  };
+
   return (
     <Formik
-      initialValues={{
-        name: "",
-        host: "",
-        environment: "",
-        request: ""
-      }}
+      initialValues={getInitialValues()}
       onSubmit={handleSubmit}
       validationSchema={yup.object({
         name: yup.string().required("Name is required"),

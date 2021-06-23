@@ -1,8 +1,10 @@
 import React from "react";
-import { Checkbox } from "neetoui";
+import { Button } from "neetoui";
 
 export default function ApiSourcesTable({
   apiSources = [],
+  setCurrrentApiSource,
+  showPane
 }) {
   return (
     <div className="w-full px-4">
@@ -12,6 +14,7 @@ export default function ApiSourcesTable({
             <th> ID </th>
             <th className="text-left">Name</th>
             <th className="text-left">Host</th>
+            <th className="text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -27,6 +30,13 @@ export default function ApiSourcesTable({
                 </div>
               </td>
               <td>{apiSource.host}</td>
+              <td>
+                <Button
+                  onClick={() => { setCurrrentApiSource(apiSource); showPane(true); } }
+                  label=""
+                  icon="ri-pencil-line"
+                />
+              </td>
             </tr>
           ))}
         </tbody>
