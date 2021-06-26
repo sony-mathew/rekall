@@ -14,8 +14,13 @@ class Api::V1::BaseController < ApplicationController
     def handle_api_exceptions(exception)
       log_exception exception
 
-      error_message = "Something went wrong. Please try again later."
-      respond_with_error(error_message, 500)
+      if exception.inspect.include?('ActiveRecord::RecordNotFound')
+        error_message = "Record not found."
+        respond_with_error(error_message, 404)
+      else
+        error_message = "Something went wrong. Please try again later."
+        respond_with_error(error_message, 500)
+      end
     end
 
     def respond_with_error(message, status = 500)

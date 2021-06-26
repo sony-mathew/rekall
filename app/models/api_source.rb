@@ -2,8 +2,6 @@
 
 class ApiSource < ApplicationRecord
   belongs_to :user
-  
-  scope :active, -> { where(is_deleted: false) }
 
   before_save :set_default_request
   

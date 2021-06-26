@@ -11,8 +11,6 @@ class QueryGroup < ApplicationRecord
     PUT: 2
   }
 
-  scope :active, -> { where(is_deleted: false) }
-
   validates :name, :http_method, :document_fields, presence: true
   validate :valid_page_size
 

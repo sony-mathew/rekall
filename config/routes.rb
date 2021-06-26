@@ -42,6 +42,8 @@ Rails.application.routes.draw do
       end
 
       resources :api_sources, only: [:index, :create, :show, :update, :destroy]
+      resources :scorers, only: [:index, :create, :show, :update, :destroy]
+      resources :query_groups, only: [:index, :create, :show, :update, :destroy]
     end
   end
 

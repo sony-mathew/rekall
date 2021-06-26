@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_many :notes, dependent: :delete_all
   has_many :api_sources
+  has_many :scorers
+  has_many :query_groups
 
   before_save :ensure_authentication_token_is_present
 

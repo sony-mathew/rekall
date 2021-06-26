@@ -14,7 +14,7 @@ class Scorer < ApplicationRecord
     detailed: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   }
 
-  scope :active, -> { where(is_deleted: false) }
+  scope :common, -> { where(user_id: nil) }
   
   validates :name, :code, :scale_type, presence: true
   validate :valid_scale
