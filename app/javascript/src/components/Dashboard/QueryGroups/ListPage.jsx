@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { Button } from "neetoui";
 
 export default function ListPage({
@@ -25,9 +26,16 @@ export default function ListPage({
             >
               <td> {queryGroup.id} </td>
               <td>
-                <div className="flex flex-row items-center justify-start text-gray-900">
-                  {queryGroup.name}
-                </div>
+                <NavLink
+                  to={`/query_groups/${queryGroup.id}/queries`}
+                  className="w-full nui-dropdown--item"
+                  activeClassName="active"
+                  // onClick={e => e.target.parentElement.click()}
+                >
+                  <div className="flex flex-row items-center justify-start text-gray-900">
+                    {queryGroup.name}
+                  </div>
+                </NavLink>
               </td>
               <td>{queryGroup.http_method} | {queryGroup.document_fields}</td>
               <td>

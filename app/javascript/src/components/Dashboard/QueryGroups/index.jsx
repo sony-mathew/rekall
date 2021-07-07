@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
 import { Button, PageLoader } from "neetoui";
 import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
@@ -8,9 +16,10 @@ import queryGroupService from "apis/queryGroupService";
 
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
+import QueryModel from "./../Queries";
 // import DeleteAlert from "./DeleteAlert";
 
-const QueryGroups = () => {
+const QueryGroupsLanding = () => {
   const [loading, setLoading] = useState(true);
   const [showPane, setshowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
@@ -92,5 +101,21 @@ const QueryGroups = () => {
     </>
   );
 };
+
+
+const QueryGroups = () => {
+  let { path, url } = useRouteMatch();
+
+  return (
+    <Switch>
+      <Route exact path={path}>
+        <QueryGroupsLanding />
+      </Route>
+      <Route path={`${path}/:queryGroupId/queries`}>
+        <QueryModel />
+      </Route>
+    </Switch>
+  );
+}
 
 export default QueryGroups;

@@ -15,11 +15,10 @@ const Home = () => {
       <Navbar />
       <div className="flex flex-col items-start justify-start flex-grow h-screen overflow-y-auto">
         <Switch>
-          <Route exact path="/notes" component={Notes} />
-          <Route exact path="/query_groups" component={QueryGroups} />
           <Route exact path="/api_sources" component={ApiSources} />
           <Route exact path="/my/password/edit" component={PasswordEdit} />
           <Route exact path="/my/profile" component={Profile} />
+          <Route path="/query_groups" component={QueryGroups} />
           <Redirect from="/" to="/api_sources" />
         </Switch>
       </div>
