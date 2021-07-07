@@ -42,6 +42,7 @@ def create_sample_data!
   create_api_source!
   create_scorers!
   create_query_group!
+  create_queries!
 end
 
 def create_user!(options = {})
@@ -89,4 +90,19 @@ def create_query_group!(options = {})
   }
   attributes = query_group_attributes.merge options
   QueryGroup.create! attributes
+end
+
+def create_queries!(options = {})
+  query_group = QueryGroup.first
+  query_texts = ['api', 'search', 'test']
+  query_texts.each do |q|
+    query_model_attributes = {
+      query_text: q,
+      notes: "#{q} - #{query_group.name}",
+      query_group: query_group,
+      user: User.first
+    }
+    attributes = query_model_attributes.merge options
+    Query.create! attributes
+  end
 end
