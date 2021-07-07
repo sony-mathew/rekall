@@ -2,11 +2,10 @@
 
 class ApiSource < ApplicationRecord
   belongs_to :user
-  validates :name, :host, :environment, presence: true
-
 
   before_save :set_default_request
-  scope :active, -> { where(is_deleted: false) }
+  
+  validates :name, :host, :environment, presence: true
 
   private 
   def set_default_request

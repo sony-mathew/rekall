@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_19_162854) do
+ActiveRecord::Schema.define(version: 2021_06_25_175914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -77,6 +77,34 @@ ActiveRecord::Schema.define(version: 2021_06_19_162854) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "query_groups", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "api_source_id", null: false
+    t.integer "scorer_id", null: false
+    t.integer "http_method", default: 0, null: false
+    t.integer "page_size", null: false
+    t.json "request_body"
+    t.string "query_string"
+    t.json "transform_response"
+    t.json "document_fields", null: false
+    t.uuid "user_id"
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_query_groups_on_user_id"
+  end
+
+  create_table "scorers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.integer "scale_type", default: 0, null: false
+    t.json "scale", null: false
+    t.uuid "user_id"
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
