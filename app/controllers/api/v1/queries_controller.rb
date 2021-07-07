@@ -41,14 +41,11 @@ class Api::V1::QueriesController < Api::V1::BaseController
   private
 
     def query_model_params
-      params.require(:query).permit(:query_text, 
-        :notes,
-        :query_group_id
-      ).to_h
+      params.require(:query).permit(:query_text, :notes).to_h
     end
 
     def load_query_group
-      @query_group = current_user.query_groups.active.find(params[:query_group_id])
+      @query_group = QueryGroup.active.find(params[:query_group_id])
     end
 
     def load_query

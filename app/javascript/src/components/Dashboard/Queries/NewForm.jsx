@@ -5,51 +5,27 @@ import { Input, Textarea, Select } from "neetoui/formik";
 import { Button } from "neetoui";
 
 import { serializeObject, deserializeObject } from "common/jsonHelper";
+import queryService from "apis/queryService";
 import queryGroupService from "apis/queryGroupService";
-import scorerService from "apis/scorerService";
-import apiSourceService from "apis/apiSourceService";
 
 const getList = async (service) => {
   const response = await service.fetchAll();
   return response.data.map((resource) => ({ value: resource.id, label: resource.name }));
 }
 
-const RequestTypeInputField = ({ showQueryStringField }) => {
-  if(showQueryStringField) {
-    return (<Input label="Query String" name="query_string" rows={8} className="mb-6" />);
-  } else {
-    return (<Textarea label="Request Body" name="request_body" rows={8} className="mb-6" />);
-  }
-}
-
 const preProcessObject = (resource) => {
-  resource.request_body = deserializeObject(resource.request_body);
-  resource.transform_response = deserializeObject(resource.transform_response);
-
-  if(typeof resource.api_source_id === 'object' && resource.api_source_id !== null) {
-    resource.api_source_id = resource.api_source_id.value;
-  }
-  if(typeof resource.scorer_id === 'object' && resource.scorer_id !== null) {
-    resource.scorer_id = resource.scorer_id.value;
+  if(typeof resource.query_group_id === 'object' && resource.query_group_id !== null) {
+    resource.query_group_id = resource.query_group_id.value;
   }
   return resource;
 }
 
 const defaultValues = (currentResource) => {
   let resourceObj = currentResource || {
-    name: "",
-    api_source_id: 0,
-    scorer_id: 0,
-    http_method: "GET",
-    page_size: 10,
-    request_body: {},
-    query_string: "",
-    transform_response: {},
-    document_fields: []
+    query_text: "",
+    notes: "",
+    query_group_id: 0
   };
-
-  resourceObj.request_body = serializeObject(resourceObj.request_body);
-  resourceObj.transform_response = serializeObject(resourceObj.transform_response);
 
   return resourceObj;
 }
@@ -59,8 +35,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
   const [loading, setLoading] = useState(true);
   const [resourceObject, setResourceObject] = useState(defaultValues(currentResource));
   const [showQueryStringField, setShowQueryStringField] = useState(resourceObject.http_method === 'GET');
-  const [scorerOptions, setScorerOptions] = useState([]);
-  const [sourcesOptions, setSourcesOptions] = useState([]);
+  const [queryGroupsOptions, setQueryGroupsOptions] = useState([]);
 
   useEffect(() => {
     fetchQueryGroups();
@@ -69,10 +44,8 @@ export default function NewForm({ onClose, refetch, currentResource }) {
   const fetchQueryGroups = async () => {
     try {
       setLoading(true);
-      const sourcesList = await getList(apiSourceService);
-      const scorerList = await getList(scorerService);
-      setSourcesOptions(sourcesList);
-      setScorerOptions(scorerList);
+      const queryGroupsList = await getList(queryGroupService);
+      setQueryGroupsOptions(queryGroupsList);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -84,9 +57,9 @@ export default function NewForm({ onClose, refetch, currentResource }) {
     try {
       const processedValues = preProcessObject(values);
       if(currentResource) {
-        await queryGroupService.update(currentResource.id, processedValues);
+        await queryService.update(processedValues.query_group_id, currentResource.id, processedValues);
       } else {
-        await queryGroupService.create(processedValues);
+        await queryService.create(processedValues.query_group_id, processedValues);
       }
       refetch();
       onClose();
@@ -100,52 +73,23 @@ export default function NewForm({ onClose, refetch, currentResource }) {
       initialValues={resourceObject}
       onSubmit={handleSubmit}
       validationSchema={yup.object({
-        name: yup.string().required("Name is required"),
-        http_method: yup.string().required("HTTP Method is required"),
-        page_size: yup.number().required("Page Size is required"),
-        document_fields: yup.array().required("Document fields are required"),
+        query_text: yup.string().required("Name is required"),
       })}
     >
       {({ isSubmitting }) => (
         <Form>
-          <Input label="Name" name="name" className="mb-6" />
+          <Input label="Query" name="query_text" className="mb-6" />
+          <Textarea label="Notes" name="notes" rows={8} className="mb-6" />
           <Select
-            label="Source"
+            label="Query Group"
             placeholder="Select an Option"
             isDisabled={false}
             isClearable={true}
             isSearchable={true}
-            name="api_source_id"
-            options={sourcesOptions}
+            name="query_group_id"
+            options={queryGroupsOptions}
             className="mb-6"
           />
-          <Select
-            label="Scorer"
-            placeholder="Select an Option"
-            isDisabled={false}
-            isClearable={true}
-            isSearchable={true}
-            name="scorer_id"
-            options={scorerOptions}
-            className="mb-6"
-          />
-          <Input label="Page Size" name="page_size" type="Number" className="mb-6" />
-          <Select
-            label="Request Type"
-            placeholder="Select an Option"
-            name="http_method"
-            onChange={(opt) => {
-              setShowQueryStringField(opt.value === 'GET');
-            } }
-            options={[
-              { value: "GET", label: "GET" },
-              { value: "POST", label: "POST" },
-            ]}
-            className="mb-6"
-          />
-
-          <RequestTypeInputField showQueryStringField={showQueryStringField} />
-          <Textarea label="Transform Response" name="transform_response" rows={8} className="mb-6" />
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
               onClick={onClose}
