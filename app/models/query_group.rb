@@ -15,6 +15,24 @@ class QueryGroup < ApplicationRecord
   validates :name, :http_method, :document_fields, presence: true
   validate :valid_page_size
 
+  def get_results_for(query_text)
+    options = {
+      host: api_source.host,
+      headers: api_source.request,
+      query_text: query_text,
+      query_string: self.query_string,
+      body: self.request_body
+    }
+    req = ApiRequestManager.new(options)
+    if http_method == 'GET'
+      req.do_get
+    elsif http_method == 'POST'
+      req.do_post
+    else
+      []
+    end
+  end
+
   private 
   def valid_page_size
     self.page_size ||= 10

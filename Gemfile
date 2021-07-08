@@ -62,6 +62,9 @@ gem "sidekiq"
 # Preview email in browser
 gem "letter_opener", group: :development
 
+# send http calls
+gem "http"
+
 group :development, :test do
   # Rails integration for factory-bot
   gem "factory_bot_rails"

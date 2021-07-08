@@ -56,9 +56,9 @@ end
 
 def create_api_source!(options = {})
   api_source_attributes = {
-    name: 'The Source',
-    host: 'http://localhost:9200',
-    environment: 'development',
+    name: 'NPM JS Search',
+    host: 'https://www.npmjs.com',
+    environment: 'production',
     request: {},
     user: User.first
   }
@@ -83,7 +83,7 @@ def create_query_group!(options = {})
     http_method: 'GET',
     page_size: 10,
     request_body: {},
-    query_string: '?q=${query}',
+    query_string: '/search/suggestions?q=${query}',
     transform_response: {},
     document_fields: ['id', 'title'],
     user: User.first
