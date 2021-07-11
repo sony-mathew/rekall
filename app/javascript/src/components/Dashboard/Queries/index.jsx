@@ -17,6 +17,7 @@ import queryService from "apis/queryService";
 
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
+import QueryResult from "./../Results";
 // import DeleteAlert from "./DeleteAlert";
 
 const QueryModel = () => {
@@ -63,30 +64,44 @@ const QueryModel = () => {
           />
         }
       />
-      {queries.length ? (
-        <>
-          <SubHeader
-            searchProps={{
-              value: searchTerm,
-              onChange: e => setSearchTerm(e.target.value),
-              clear: () => setSearchTerm(""),
-            }}
-          />
-          <ListPage
-            items={queries}
-            setCurrrentResource={setCurrrentResource}
-            showPane={setshowPane}
-          />
-        </>
-      ) : (
-        <EmptyState
-          image={EmptyNotesListImage}
-          title="Looks like you don't have any queries!"
-          subtitle="Query groups represent a group of queries with same request settings. Add your query groups and add add queries in them."
-          primaryAction={() => setshowPane(true)}
-          primaryActionLabel="Add New Query"
-        />
-      )}
+      <div className="w-full flex flex-row space-x-4">
+        <div>
+            {queries.length ? (
+            <>
+              <SubHeader
+                searchProps={{
+                  value: searchTerm,
+                  onChange: e => setSearchTerm(e.target.value),
+                  clear: () => setSearchTerm(""),
+                }}
+              />
+              <ListPage
+                items={queries}
+                setCurrrentResource={setCurrrentResource}
+                showPane={setshowPane}
+              />
+            </>
+          ) : (
+            <EmptyState
+              image={EmptyNotesListImage}
+              title="Looks like you don't have any queries!"
+              subtitle="Query groups represent a group of queries with same request settings. Add your query groups and add add queries in them."
+              primaryAction={() => setshowPane(true)}
+              primaryActionLabel="Add New Query"
+            />
+          )}
+        </div>
+        <div className="w-full flex-1">
+          <Switch>
+            <Route path={`${path}/:queryId/results`}>
+              <QueryResult />
+            </Route>
+            <Route>
+              <div> No query selected. </div>
+            </Route>
+          </Switch>
+        </div>
+      </div>
       <NewPane
         showPane={showPane}
         setShowPane={setshowPane}

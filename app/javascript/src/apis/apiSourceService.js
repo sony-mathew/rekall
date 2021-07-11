@@ -9,15 +9,15 @@ const fetch = (id) => {
 }
 
 const create = (payload) => {
-  axios.post("api/v1/api_sources", payload);
+  return axios.post("api/v1/api_sources", payload);
 }
 
 const update = (id, payload) => {
-  axios.put(`api/v1/api_sources/${id}`, payload);
+  return axios.put(`api/v1/api_sources/${id}`, payload);
 }
 
 const destroy = (id) => { 
-  axios.delete(`api/v1/api_sources/${id}`);
+  return axios.delete(`api/v1/api_sources/${id}`);
 }
 
 const apiSourceService = {
