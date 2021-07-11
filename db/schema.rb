@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_07_080714) do
+ActiveRecord::Schema.define(version: 2021_07_11_143725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -104,7 +104,21 @@ ActiveRecord::Schema.define(version: 2021_07_07_080714) do
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "document_uuid"
     t.index ["user_id"], name: "index_query_groups_on_user_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.string "notes"
+    t.json "data", null: false
+    t.integer "latest_score"
+    t.integer "query_id", null: false
+    t.integer "query_group_id", null: false
+    t.uuid "user_id", null: false
+    t.boolean "is_snapshoted", default: false, null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "scorers", force: :cascade do |t|
@@ -113,6 +127,34 @@ ActiveRecord::Schema.define(version: 2021_07_07_080714) do
     t.integer "scale_type", default: 0, null: false
     t.json "scale", null: false
     t.uuid "user_id"
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer "value"
+    t.string "document_uuid"
+    t.integer "scorer_id", null: false
+    t.integer "result_id", null: false
+    t.integer "snapshot_id"
+    t.integer "query_id", null: false
+    t.integer "query_group_id", null: false
+    t.uuid "user_id", null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "snapshots", force: :cascade do |t|
+    t.string "name"
+    t.string "notes"
+    t.json "data", null: false
+    t.integer "latest_score"
+    t.integer "result_id", null: false
+    t.integer "query_id", null: false
+    t.integer "query_group_id", null: false
+    t.uuid "user_id", null: false
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

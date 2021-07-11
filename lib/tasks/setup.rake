@@ -85,6 +85,7 @@ def create_query_group!(options = {})
     request_body: {},
     query_string: '/search/suggestions?q=${query}',
     transform_response: {},
+    document_uuid: 'name',
     document_fields: ['id', 'title'],
     user: User.first
   }
