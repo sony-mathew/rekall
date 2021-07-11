@@ -12,7 +12,7 @@ class Query < ApplicationRecord
   end
 
   def fetch_fresh_results!
-    api_response = query_group.get_results_for(self.query_text)
+    api_response = fetch_api_results
     if api_response.presence
       result = Result.new({
         data: api_response,
@@ -23,5 +23,9 @@ class Query < ApplicationRecord
       result.save!
       result
     end
+  end
+
+  def fetch_api_results
+    query_group.get_results_for(self.query_text)
   end
 end

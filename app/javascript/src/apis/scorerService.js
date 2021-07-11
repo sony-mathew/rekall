@@ -9,15 +9,15 @@ const fetch = (id) => {
 }
 
 const create = (payload) => {
-  axios.post("api/v1/scorers", payload);
+  return axios.post("api/v1/scorers", payload);
 }
 
 const update = (id, payload) => {
-  axios.put(`api/v1/scorers/${id}`, payload);
+  return axios.put(`api/v1/scorers/${id}`, payload);
 }
 
 const destroy = (id) => { 
-  axios.delete(`api/v1/scorers/${id}`);
+  return axios.delete(`api/v1/scorers/${id}`);
 }
 
 const scorerService = {

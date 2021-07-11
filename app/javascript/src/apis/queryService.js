@@ -9,15 +9,15 @@ const fetch = (query_group_id, id) => {
 }
 
 const create = (query_group_id, payload) => {
-  axios.post(`api/v1/query_groups/${query_group_id}/queries`, payload);
+  return axios.post(`api/v1/query_groups/${query_group_id}/queries`, payload);
 }
 
 const update = (query_group_id, id, payload) => {
-  axios.put(`api/v1/query_groups/${query_group_id}/queries/${id}`, payload);
+  return axios.put(`api/v1/query_groups/${query_group_id}/queries/${id}`, payload);
 }
 
 const destroy = (query_group_id, id) => { 
-  axios.delete(`api/v1/query_groups/${query_group_id}/queries/${id}`);
+  return axios.delete(`api/v1/query_groups/${query_group_id}/queries/${id}`);
 }
 
 const queryService = {

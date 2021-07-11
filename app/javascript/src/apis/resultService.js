@@ -9,19 +9,19 @@ const fetch = (query_group_id, query_id, id) => {
 }
 
 const fetch_fresh_results = (query_group_id, query_id) => {
-  axios.post(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/fetch_fresh_results`, {});
+  return axios.post(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/fetch_fresh_results`, {});
 }
 
 const register_score = (query_group_id, query_id, id, payload) => {
-  axios.post(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/${id}/register_score`, payload);
+  return axios.post(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/${id}/register_score`, payload);
 }
 
 const update = (query_group_id, query_id, id, payload) => {
-  axios.put(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/${id}`, payload);
+  return axios.put(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/${id}`, payload);
 }
 
 const destroy = (query_group_id, query_id, id) => { 
-  axios.delete(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/${id}`);
+  return axios.delete(`api/v1/query_groups/${query_group_id}/queries/${query_id}/results/${id}`);
 }
 
 const resultService = {

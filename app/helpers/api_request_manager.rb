@@ -13,6 +13,8 @@ class ApiRequestManager
   end
 
   def do_get
+    puts '#'*50
+    puts "Sending request to #{formatted_uri}"
     @res = HTTP.headers(custom_headers).get(formatted_uri)
     @res.parse
   end

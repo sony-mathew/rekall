@@ -15,7 +15,7 @@ export default function ListPage({
         <div className="flex-1 flex flex-col">
           {queryGroup['document_fields'].map(field => {
             return (
-              <div className="flex flex-row space-x-4 text-gray-900">
+              <div key={field} className="flex flex-row space-x-4 text-gray-900">
                 <div>{field}: </div>
                 <div>{doc[field]}</div>
               </div>
@@ -38,7 +38,7 @@ export default function ListPage({
       {items.map(doc => (
         <Card key={doc[queryGroup['document_uuid']]}>
           <Card.Title>{doc[queryGroup['document_uuid']]}</Card.Title>
-          <p>{getFieldsFor(doc)}</p>
+          <div>{getFieldsFor(doc)}</div>
         </Card>
       ))}
     </div>

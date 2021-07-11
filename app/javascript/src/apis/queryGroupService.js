@@ -9,15 +9,15 @@ const fetch = (id) => {
 }
 
 const create = (payload) => {
-  axios.post("api/v1/query_groups", payload);
+  return axios.post("api/v1/query_groups", payload);
 }
 
 const update = (id, payload) => {
-  axios.put(`api/v1/query_groups/${id}`, payload);
+  return axios.put(`api/v1/query_groups/${id}`, payload);
 }
 
 const destroy = (id) => { 
-  axios.delete(`api/v1/query_groups/${id}`);
+  return axios.delete(`api/v1/query_groups/${id}`);
 }
 
 const queryGroupService = {
