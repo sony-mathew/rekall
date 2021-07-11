@@ -44,7 +44,17 @@ Rails.application.routes.draw do
       resources :api_sources, only: [:index, :create, :show, :update, :destroy]
       resources :scorers, only: [:index, :create, :show, :update, :destroy]
       resources :query_groups, only: [:index, :create, :show, :update, :destroy] do
-        resources :queries, only: [:index, :create, :show, :update, :destroy]
+        resources :queries, only: [:index, :create, :show, :update, :destroy] do
+          resources :results, only: [:index, :show, :update, :destroy] do
+            collection do
+              post 'fetch_fresh_results'
+            end
+
+            member do
+              post 'register_score'
+            end
+          end
+        end
       end
     end
   end

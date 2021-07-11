@@ -19,6 +19,10 @@ class Scorer < ApplicationRecord
   validates :name, :code, :scale_type, presence: true
   validate :valid_scale
 
+  def is_valid_scale_value?(value)
+    scale.include?(value)
+  end
+
   private
 
   def valid_scale

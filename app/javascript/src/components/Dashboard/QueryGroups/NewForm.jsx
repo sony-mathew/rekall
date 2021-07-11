@@ -45,6 +45,7 @@ const defaultValues = (currentResource) => {
     request_body: {},
     query_string: "",
     transform_response: {},
+    document_uuid: '',
     document_fields: []
   };
 
@@ -103,6 +104,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
         name: yup.string().required("Name is required"),
         http_method: yup.string().required("HTTP Method is required"),
         page_size: yup.number().required("Page Size is required"),
+        document_uuid: yup.string().required("Document UUID is required"),
         document_fields: yup.array().required("Document fields are required"),
       })}
     >
@@ -145,6 +147,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
           />
 
           <RequestTypeInputField showQueryStringField={showQueryStringField} />
+          <Input label="Document UUID" name="document_uuid" type="String" className="mb-6" />
           <Textarea label="Transform Response" name="transform_response" rows={8} className="mb-6" />
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
