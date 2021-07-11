@@ -4,6 +4,7 @@ class Result < ApplicationRecord
   belongs_to :query
   belongs_to :query_group
   belongs_to :user
+  has_many :scores
 
   def has_document?(document_uuid)
     self.data.select { |doc| doc[query_group.document_uuid] == document_uuid }
