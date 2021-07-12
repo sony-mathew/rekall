@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "neetoui";
+import { timeSince } from "common/timeHelper";
 
 export default function ListPage({
   items = [],
@@ -21,12 +22,20 @@ export default function ListPage({
                 <td>
                   <NavLink
                     to={`/query_groups/${query.query_group_id}/queries/${query.id}/results`}
-                    className="w-full"
+                    className="w-full no-underline"
                     activeClassName="active"
                     // onClick={e => e.target.parentElement.click()}
                   >
-                    <div className="flex flex-row items-center justify-start text-gray-900">
-                      {query.query_text} (#{query.id})
+                    <div className="flex flex-row space-x-2 text-gray-900 items-center">
+                      <div className="rounded-md bg-purple-300 text-white text-xl font-extrabold p-2">
+                        {query.lastest_score || '0.0'}
+                      </div>
+                      <div>
+                        {query.query_text}
+                      </div>
+                      <div className="text-xs text-gray-300">
+                        (Updated {timeSince(new Date(query.updated_at))} ago)
+                      </div>
                     </div>
                   </NavLink>
                 </td>

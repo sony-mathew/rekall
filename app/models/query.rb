@@ -14,12 +14,12 @@ class Query < ApplicationRecord
   def fetch_fresh_results!
     api_response = fetch_api_results
     if api_response.presence
-      result = Result.new({
-        data: api_response,
+      result = Result.find_or_initialize_by({
         query_id: self.id,
-        query_group_id: self.query_group_id,
-        user_id: self.user_id
-      })
+        query_group_id: self.query_group_id
+      });
+      result.data = api_response
+      result.user_id ||= self.user_id
       result.save!
       result
     end
