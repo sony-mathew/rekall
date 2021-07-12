@@ -13,6 +13,8 @@ import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
 import { Header, SubHeader } from "neetoui/layouts";
 
+import { timeSince } from "common/timeHelper";
+
 import queryGroupService from "apis/queryGroupService";
 import queryService from "apis/queryService";
 import resultService from "apis/resultService";
@@ -75,7 +77,10 @@ const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
       <Header
         title="Results"
         actionBlock={
-          <div className="flex flex-row space-x-4">
+          <div className="flex flex-row space-x-4 items-center">
+            { queryResult ? (<div className="text-xs text-gray-300">
+              (Updated {timeSince(new Date(queryResult.updated_at))} ago)
+            </div>) : null }
             <Button
               onClick={() => { setCurrrentQuery(query); showQueryEditPane(true); } }
               label="Edit Query"
