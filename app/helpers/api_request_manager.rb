@@ -1,28 +1,39 @@
-require "http"
-
 class ApiRequestManager
-  attr_accessor :res, :options
+  attr_accessor :res, :options, :errors
 
   def initialize(options)
     @options = options
   end
 
   def do_post
-    @res = HTTP.headers(custom_headers).post(formatted_uri, formatted_request_body)
-    @res.parse
+    log_req
+    @res = RestClient.post(formatted_uri, formatted_request_body.to_json, custom_headers.merge({ content_type: :json }))
+    JSON.parse(@res.body)
+  rescue RestClient::ExceptionWithResponse => e
+    @errors = e.response
+    e.response
   end
 
   def do_get
-    puts '#'*50
-    puts "Sending request to #{formatted_uri}"
-    @res = HTTP.headers(custom_headers).get(formatted_uri)
-    @res.parse
+    log_req
+    @res = RestClient.get(formatted_uri, custom_headers)
+    JSON.parse(@res.body)
+  rescue RestClient::ExceptionWithResponse => e
+    @errors = e.response
+    e.response
   end
 
 
   private
   def custom_headers
-    {}
+    {
+      accept: :json
+    }
+  end
+
+  def log_req
+    puts '#'*50
+    puts "Sending request to #{formatted_uri}"
   end
 
   def formatted_uri
@@ -38,7 +49,7 @@ class ApiRequestManager
   end
 
   def formatted_request_body
-    template = ERB.new(@options[:body].to_json)
+    template = ERB.new(JSON.generate(@options[:body]))
     res = template.result_with_hash(query: @options[:query_text])
     JSON.parse(res)
   end

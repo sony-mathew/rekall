@@ -46,8 +46,9 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
         :http_method,
         :page_size,
         :query_string,
+        :document_uuid,
+        :transform_response,
         request_body: {},
-        transform_response: {},
         document_fields: []
       ).to_h
     end

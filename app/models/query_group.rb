@@ -25,9 +25,9 @@ class QueryGroup < ApplicationRecord
     }
     req = ApiRequestManager.new(options)
     if http_method == 'GET'
-      req.do_get
+      formatted_response(req.do_get)
     elsif http_method == 'POST'
-      req.do_post
+      formatted_response(req.do_post)
     else
       []
     end
@@ -38,6 +38,25 @@ class QueryGroup < ApplicationRecord
     self.page_size ||= 10
     if page_size < 0 || page_size >= 50
       errors.add(:page_size, "should be between (0, 50]")
+    end
+  end
+
+  def formatted_response(data)
+    if transform_response.present?
+      begin
+        template = ERB.new(transform_response)
+        res = template.result_with_hash(data: data)
+        JSON.parse(res)
+      rescue Exception => e
+        { 
+          error: "Something happened while trasnforming the response",
+          transform_response: transform_response,
+          data: data,
+          details: e.inspect
+        }
+      end
+    else
+      data
     end
   end
 end

@@ -63,7 +63,7 @@ gem "sidekiq"
 gem "letter_opener", group: :development
 
 # send http calls
-gem "http"
+gem "rest-client"
 
 group :development, :test do
   # Rails integration for factory-bot

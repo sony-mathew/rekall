@@ -25,6 +25,7 @@ const RequestTypeInputField = ({ showQueryStringField }) => {
 const preProcessObject = (resource) => {
   resource.request_body = deserializeObject(resource.request_body);
   resource.transform_response = deserializeObject(resource.transform_response);
+  resource.document_fields = resource.document_fields.split(',');
 
   if(typeof resource.api_source_id === 'object' && resource.api_source_id !== null) {
     resource.api_source_id = resource.api_source_id.value;
@@ -37,20 +38,23 @@ const preProcessObject = (resource) => {
 
 const defaultValues = (currentResource) => {
   let resourceObj = currentResource || {
-    name: "",
+    name: '',
     api_source_id: 0,
     scorer_id: 0,
     http_method: "GET",
     page_size: 10,
     request_body: {},
-    query_string: "",
-    transform_response: {},
+    query_string: '',
+    transform_response: '',
     document_uuid: '',
     document_fields: []
   };
 
   resourceObj.request_body = serializeObject(resourceObj.request_body);
   resourceObj.transform_response = serializeObject(resourceObj.transform_response);
+  if(Array.isArray(resourceObj.document_fields)) {
+    resourceObj.document_fields = resourceObj.document_fields.join(',');
+  }
 
   return resourceObj;
 }
@@ -104,8 +108,8 @@ export default function NewForm({ onClose, refetch, currentResource }) {
         name: yup.string().required("Name is required"),
         http_method: yup.string().required("HTTP Method is required"),
         page_size: yup.number().required("Page Size is required"),
-        document_uuid: yup.string().required("Document UUID is required"),
-        document_fields: yup.array().required("Document fields are required"),
+        document_uuid: yup.string().required("Unique Document Field is required"),
+        document_fields: yup.string().required("Document fields are required"),
       })}
     >
       {({ isSubmitting }) => (
@@ -147,7 +151,8 @@ export default function NewForm({ onClose, refetch, currentResource }) {
           />
 
           <RequestTypeInputField showQueryStringField={showQueryStringField} />
-          <Input label="Document UUID" name="document_uuid" type="String" className="mb-6" />
+          <Input label="Unique Document Field" name="document_uuid" type="String" className="mb-6" />
+          <Input label="Fields to Display" name="document_fields" type="String" className="mb-6" />
           <Textarea label="Transform Response" name="transform_response" rows={8} className="mb-6" />
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
