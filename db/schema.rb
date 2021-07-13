@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_11_143725) do
+ActiveRecord::Schema.define(version: 2021_07_12_162312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2021_07_11_143725) do
     t.integer "page_size", null: false
     t.json "request_body"
     t.string "query_string"
-    t.json "transform_response"
+    t.string "transform_response"
     t.json "document_fields", null: false
     t.uuid "user_id"
     t.boolean "is_deleted", default: false, null: false
