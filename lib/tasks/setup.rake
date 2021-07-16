@@ -83,10 +83,10 @@ def create_query_group!(options = {})
     http_method: 'GET',
     page_size: 10,
     request_body: {},
-    query_string: '/search/suggestions?q=${query}',
-    transform_response: {},
+    query_string: '/search/suggestions?q=<%= query %>',
+    transform_response: '',
     document_uuid: 'name',
-    document_fields: ['id', 'title'],
+    document_fields: ['description', 'version'],
     user: User.first
   }
   attributes = query_group_attributes.merge options
