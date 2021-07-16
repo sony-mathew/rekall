@@ -12,7 +12,7 @@ class Api::V1::ResultsController < Api::V1::BaseController
 
   def fetch_fresh_results
     @result = @query.fetch_fresh_results!
-    if !@result.errors.present?
+    if @result && !@result.errors.present?
       render json: { result: @result, notice: "Fetched the latest query results!" }
     else
       render json: { error: "Some error occurred." }, status: 422
