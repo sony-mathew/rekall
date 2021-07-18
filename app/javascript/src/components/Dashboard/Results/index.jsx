@@ -84,8 +84,10 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
       {queryResult ? (
         <>
           <ListPage
-            queryGroup={queryGroup}
             scorer={scorer}
+            queryGroup={queryGroup}
+            query={query}
+            queryResult={queryResult}
             items={queryResult.data}
             setCurrrentResource={setCurrrentResource}
           />

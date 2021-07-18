@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "neetoui";
+
 import { colorForScaleValue } from 'common/colorHelper';
+import resultService from "apis/resultService";
 
 export default function ListPage({
-  queryGroup,
   scorer,
+  queryGroup,
+  query,
+  queryResult,
   items = [],
   setCurrrentResource
 }) {
@@ -37,9 +41,15 @@ export default function ListPage({
   }
 
   const getRatingsPanelFor = (doc) => {
-    const rateDoc = (value) => {
-      setShowRatingPaneFor(false);
-      console.log(value, doc);
+    const rateDoc = async (value) => {
+      try {
+        console.log(value, doc);
+        const response = await resultService.register_score(queryGroup.id, query.id, queryResult.id, doc);
+      } catch (error) {
+        logger.error(error);
+      } finally {
+        setShowRatingPaneFor(false);
+      }
     };
 
     return (

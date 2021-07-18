@@ -25,7 +25,7 @@ export default function ListPage({
                     to={`/query_groups/${query.query_group_id}/queries/${query.id}/results`}
                     className="w-full no-underline"
                     activeClassName="active"
-                    // onClick={e => e.target.parentElement.click()}
+                    onClick={e => setCurrrentResource(query) }
                   >
                     <div className="flex flex-row space-x-2 text-gray-900 items-center">
                       <div className="rounded-md text-white text-xl font-extrabold p-2 items-center"
