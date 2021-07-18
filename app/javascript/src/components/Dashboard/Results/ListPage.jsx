@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "neetoui";
+import { colorForScaleValue } from 'common/colorHelper';
 
 export default function ListPage({
   queryGroup,
@@ -28,7 +29,7 @@ export default function ListPage({
           <Button
             onClick={() => { setCurrrentResource(doc); setShowRatingPaneFor(doc); } }
             label=""
-            icon="ri-user-star-line"
+            icon="ri-star-fill"
           />
         </div>
       </div>
@@ -42,10 +43,22 @@ export default function ListPage({
     };
 
     return (
-      <div className="rounded-xl flex flex-row space-x-2 p2 bg-pink-100 p-4">
-        {scorer.scale.map((scaleValue) => {
-          return (<Button key={scaleValue} onClick={() => rateDoc(scaleValue)} label={scaleValue}/>);
-        })}
+      <div className="rounded-xl flex flex-col space-y-2 p2 bg-blue-100 p-4">
+        <div>
+          Rate this result
+        </div>
+        <div className="flex flex-row space-x-2">
+          {scorer.scale.map((scaleValue) => {
+            return (
+              <div className="w-12 h-12 text-white flex items-center justify-center text-2xl font-extrabold"
+                style={{backgroundColor: colorForScaleValue(scorer.scale.length, scaleValue)}}
+                key={scaleValue}
+                onClick={() => rateDoc(scaleValue)}
+              >
+                {scaleValue}
+              </div>)
+          })}
+        </div>
       </div>
     );
   };
@@ -57,7 +70,7 @@ export default function ListPage({
           <Card.Title>{doc[queryGroup['document_uuid']]}</Card.Title>
           <div>{getFieldsFor(doc)}</div>
           { (showRatingPaneFor &&  showRatingPaneFor === doc) ? 
-              (<div className="absolute inset-y-1/4 right-4">{getRatingsPanelFor(doc)}</div>)
+              (<div className="absolute inset-y-1 right-4">{getRatingsPanelFor(doc)}</div>)
               : ''
           }
         </Card>

@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Button } from "neetoui";
+import { colorForScaleValue } from 'common/colorHelper';
 import { timeSince } from "common/timeHelper";
 
 export default function ListPage({
   items = [],
+  scorer,
   setCurrrentResource,
   showPane
 }) {
@@ -27,8 +28,9 @@ export default function ListPage({
                     // onClick={e => e.target.parentElement.click()}
                   >
                     <div className="flex flex-row space-x-2 text-gray-900 items-center">
-                      <div className="rounded-md bg-purple-300 text-white text-xl font-extrabold p-2">
-                        {query.lastest_score || '0.0'}
+                      <div className="rounded-md text-white text-xl font-extrabold p-2 items-center"
+                        style={{backgroundColor: colorForScaleValue(scorer.scale.length, query.lastest_score || 0.0)}}
+                      > { (query.lastest_score || 0.0).toFixed(2) }
                       </div>
                       <div>
                         {query.query_text}
