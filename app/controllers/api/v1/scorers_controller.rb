@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::ScorersController < Api::V1::BaseController
-  before_action :load_scorer, only: [:show, :update, :destroy]
+  before_action :load_scorer, only: [:show]
+  before_action :load_user_scorer, only: [:update, :destroy]
 
   def index
     scorers = Scorer.common + current_user.scorers.active
@@ -44,6 +45,10 @@ class Api::V1::ScorersController < Api::V1::BaseController
     end
 
     def load_scorer
+      @scorer = Scorer.active.find(params[:id])
+    end
+
+    def load_user_scorer
       @scorer = current_user.scorers.active.find(params[:id])
     end
 end

@@ -16,6 +16,7 @@ import { Header, SubHeader } from "neetoui/layouts";
 import { timeSince } from "common/timeHelper";
 
 import queryGroupService from "apis/queryGroupService";
+import scorerService from "apis/scorerService";
 import queryService from "apis/queryService";
 import resultService from "apis/resultService";
 
@@ -26,10 +27,10 @@ const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
   let urlParams = useParams();
 
   const [loading, setLoading] = useState(true);
-  const [showPane, setShowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
   
   const [queryGroup, setQueryGroup] = useState(false);
+  const [scorer, setScorer] = useState(false);
   const [query, setQuery] = useState(false);
   const [queryResult, setQueryResult] = useState(false);
 
@@ -44,6 +45,8 @@ const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
       const queryGroupResponse = await queryGroupService.fetch(urlParams.queryGroupId);
       setQueryGroup(queryGroupResponse.data.query_group);
 
+      const scorerResponse = await scorerService.fetch(queryGroupResponse.data.query_group.scorer_id);
+      setScorer(scorerResponse.data.scorer);
 
       const queryResponse = await queryService.fetch(urlParams.queryGroupId, urlParams.queryId);
       setQuery(queryResponse.data.query);
@@ -98,9 +101,9 @@ const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
         <>
           <ListPage
             queryGroup={queryGroup}
+            scorer={scorer}
             items={queryResult.data}
             setCurrrentResource={setCurrrentResource}
-            showPane={setShowPane}
           />
         </>
       ) : (
