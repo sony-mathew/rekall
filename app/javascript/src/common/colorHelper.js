@@ -10,7 +10,7 @@
 const COLORS = {
   2: ['#e53935', '#45bf55'],
   4: ['#e53935', '#c67900', '#9b9e00', '#45bf55'],
-  10: ['#e53935','#dd5618','#d76301','#c67900','#bd8400','#b28d00','#9b9e00','#7fac18','#6fb32e','#45bf55'],
+  10: ['#e53935','#dd5618','#d76301','#c67900','#bd8400','#b28d00','#9b9e00','#7fac18','#6fb32e','#45bf55', '#45bf55'],
 }
 
 const colorForScaleValue = (scaleSize = 2, scaleValue = 0) => {
@@ -18,4 +18,9 @@ const colorForScaleValue = (scaleSize = 2, scaleValue = 0) => {
   return COLORS[scaleSize][roundedScaleValue];
 }
 
-export { COLORS, colorForScaleValue };
+const colorForBinaryRating = (rating = 0, scaleSize = 10) => {
+  let roundedRating = Math.round(rating * 10);
+  return COLORS[scaleSize][roundedRating];
+}
+
+export { COLORS, colorForScaleValue, colorForBinaryRating };

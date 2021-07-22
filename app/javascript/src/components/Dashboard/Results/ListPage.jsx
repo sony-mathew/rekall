@@ -44,7 +44,11 @@ export default function ListPage({
     const rateDoc = async (value) => {
       try {
         console.log(value, doc);
-        const response = await resultService.register_score(queryGroup.id, query.id, queryResult.id, doc);
+        const payload = {
+          doc: doc,
+          score: value
+        }
+        const response = await resultService.register_score(queryGroup.id, queryResult.query_id, queryResult.id, payload);
       } catch (error) {
         logger.error(error);
       } finally {

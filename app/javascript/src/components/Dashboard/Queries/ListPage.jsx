@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { colorForScaleValue } from 'common/colorHelper';
+import { colorForBinaryRating } from 'common/colorHelper';
 import { timeSince } from "common/timeHelper";
 
 export default function ListPage({
@@ -29,8 +29,8 @@ export default function ListPage({
                   >
                     <div className="flex flex-row space-x-2 text-gray-900 items-center">
                       <div className="rounded-md text-white text-xl font-extrabold p-2 items-center"
-                        style={{backgroundColor: colorForScaleValue(scorer.scale.length, query.lastest_score || 0.0)}}
-                      > { (query.lastest_score || 0.0).toFixed(2) }
+                        style={{backgroundColor: colorForBinaryRating(query.latest_score || 0.0)}}
+                      > { (query.latest_score || 0.0).toFixed(2) }
                       </div>
                       <div>
                         {query.query_text}

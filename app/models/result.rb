@@ -6,21 +6,37 @@ class Result < ApplicationRecord
   belongs_to :user
   has_many :scores
 
-  def has_document?(document_uuid)
+  def has_document?(document)
+    document_uuid = document[query_group.document_uuid]
     self.data.select { |doc| doc[query_group.document_uuid] == document_uuid }
   end
 
-  def register_score!(value, document_uuid)
-    score = Score.new({
-      value: value,
-      document_uuid: document_uuid,
-      scorer_id: self.query_group.scorer_id,
-      result_id: self.id,
-      query_id: self.query_id,
-      query_group_id: self.query_group_id,
-      user_id: self.user_id
-    })
+  def active_scores
+    scores.last
+  end
+
+  def ratings
+    active_scores.ratings
+  end
+
+  def recalculate_final_score!
+    self.latest_score = query_group.scorer.calculate_score_for(query_group.document_uuid, ratings, self.data)
+    self.save!
+    self.latest_score
+  end
+
+  def register_score!(params)
+    score = Score.find_or_initialize_by({
+      document_uuid: query_group.document_uuid,
+      scorer_id: query_group.scorer_id,
+      result_id: id,
+      query_id: query_id,
+      query_group_id: query_group_id,
+      user_id: user_id
+    });
+    score.update_ratings_with(params)
     score.save!
+    recalculate_final_score!
     score
   end
 end

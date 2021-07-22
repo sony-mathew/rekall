@@ -7,7 +7,7 @@ class Query < ApplicationRecord
   
   validates :query_text, presence: true
 
-  def last_result
+  def active_result
     results.active.last
   end
 
@@ -27,5 +27,11 @@ class Query < ApplicationRecord
 
   def fetch_api_results
     query_group.get_results_for(self.query_text)
+  end
+
+  def refresh_score!
+    self.latest_score = active_result.latest_score
+    self.save!
+    self.latest_score
   end
 end
