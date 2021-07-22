@@ -7,7 +7,7 @@ class Api::V1::ResultsController < Api::V1::BaseController
   before_action :validate_score_params, only: [:register_score]
 
   def index
-    render json: { result: @query.last_result, notice: "Fetched the latest query results!" }
+    render json: { result: @query.active_result, notice: "Fetched the latest query results!" }
   end
 
   def fetch_fresh_results
@@ -32,9 +32,10 @@ class Api::V1::ResultsController < Api::V1::BaseController
   end
 
   def register_score
-    @score = @result.register_score!(params[:value], params[:document_uuid])
+    @score = @result.register_score!(params)
     if !@score.errors.presence
-      render json: { score: @score, notice: "Score for #{params[:document_uuid]} has been updated!" }
+      @query.refresh_score!
+      render json: { score: @score, notice: "Score has been updated!" }
     else
       render json: { error: @score.errors.full_messages.to_sentence }, status: 422
     end
@@ -55,12 +56,12 @@ class Api::V1::ResultsController < Api::V1::BaseController
     end
 
     def validate_score_params
-      if !@query_group.scorer.is_valid_scale_value?(params[:value])
+      if !@query_group.scorer.is_valid_scale_value?(params[:score])
         render json: { error: "Score value should be in #{@query_group.scorer.scale.inspect}", notice: "Score value should be in #{@query_group.scorer.scale.inspect}" }, status: 422
         return
       end
 
-      if !@result.has_document?(params[:document_uuid])
+      if !@result.has_document?(params[:doc])
         render json: { error: "document_uuid should be in results", notice: " document_uuid should be in results" }, status: 422
       end
     end

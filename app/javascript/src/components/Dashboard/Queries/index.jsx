@@ -10,6 +10,8 @@ import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
 import { Header } from "neetoui/layouts";
 
+import queryGroupService from "apis/queryGroupService";
+import scorerService from "apis/scorerService";
 import queryService from "apis/queryService";
 
 import ListPage from "./ListPage";
@@ -24,6 +26,8 @@ const QueryModel = () => {
   const [showPane, setShowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
 
+  const [queryGroup, setQueryGroup] = useState(false);
+  const [scorer, setScorer] = useState(false);
   const [queries, setQueries] = useState([]);
   
 
@@ -34,6 +38,13 @@ const QueryModel = () => {
   const fetchQueries = async () => {
     try {
       setLoading(true);
+
+      const queryGroupResponse = await queryGroupService.fetch(urlParams.queryGroupId);
+      setQueryGroup(queryGroupResponse.data.query_group);
+
+      const scorerResponse = await scorerService.fetch(queryGroupResponse.data.query_group.scorer_id);
+      setScorer(scorerResponse.data.scorer);
+
       const response = await queryService.fetchAll(urlParams.queryGroupId);
       setQueries(response.data);
     } catch (error) {
@@ -64,6 +75,7 @@ const QueryModel = () => {
             <>
               <ListPage
                 items={queries}
+                scorer={scorer}
                 setCurrrentResource={setCurrrentResource}
                 showPane={setShowPane}
               />
@@ -81,7 +93,7 @@ const QueryModel = () => {
         <div className="w-full flex-1">
           <Switch>
             <Route path={`${path}/:queryId/results`}>
-              <QueryResult setCurrrentQuery={setCurrrentResource} showQueryEditPane={setShowPane} />
+              <QueryResult setCurrrentQuery={setCurrrentResource} showQueryEditPane={setShowPane} query={currentResource} scorer={scorer} queryGroup={queryGroup} />
             </Route>
             <Route>
               <div> No query selected. </div>

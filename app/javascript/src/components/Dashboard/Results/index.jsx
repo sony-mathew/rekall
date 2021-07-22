@@ -15,22 +15,17 @@ import { Header, SubHeader } from "neetoui/layouts";
 
 import { timeSince } from "common/timeHelper";
 
-import queryGroupService from "apis/queryGroupService";
-import queryService from "apis/queryService";
 import resultService from "apis/resultService";
 
 import ListPage from "./ListPage";
 
-const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
+const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEditPane }) => {
   let { path, url } = useRouteMatch();
   let urlParams = useParams();
 
   const [loading, setLoading] = useState(true);
-  const [showPane, setShowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
-  
-  const [queryGroup, setQueryGroup] = useState(false);
-  const [query, setQuery] = useState(false);
+
   const [queryResult, setQueryResult] = useState(false);
 
   useEffect(() => {
@@ -40,14 +35,6 @@ const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
   const fetchQueryResult = async () => {
     try {
       setLoading(true);
-
-      const queryGroupResponse = await queryGroupService.fetch(urlParams.queryGroupId);
-      setQueryGroup(queryGroupResponse.data.query_group);
-
-
-      const queryResponse = await queryService.fetch(urlParams.queryGroupId, urlParams.queryId);
-      setQuery(queryResponse.data.query);
-
       const resultResponse = await resultService.fetchAll(urlParams.queryGroupId, urlParams.queryId);
       setQueryResult(resultResponse.data.result);
     } catch (error) {
@@ -97,10 +84,12 @@ const QueryResult = ({ setCurrrentQuery, showQueryEditPane }) => {
       {queryResult ? (
         <>
           <ListPage
+            scorer={scorer}
             queryGroup={queryGroup}
+            query={query}
+            queryResult={queryResult}
             items={queryResult.data}
             setCurrrentResource={setCurrrentResource}
-            showPane={setShowPane}
           />
         </>
       ) : (
