@@ -8,11 +8,12 @@ import {
   useRouteMatch,
   useLocation
 } from "react-router-dom";
-import { Button, PageLoader } from "neetoui";
+import { Button, PageLoader, Tooltip } from "neetoui";
 import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
 import { Header, SubHeader } from "neetoui/layouts";
 
+import { colorForBinaryRating } from 'common/colorHelper';
 import { timeSince } from "common/timeHelper";
 
 import resultService from "apis/resultService";
@@ -26,7 +27,7 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
   const [loading, setLoading] = useState(true);
   const [currentResource, setCurrrentResource] = useState(false);
 
-  const [queryResult, setQueryResult] = useState(false);
+  const [queryResult, setQueryResult] = useState({});
 
   useEffect(() => {
     fetchQueryResult();
@@ -65,9 +66,21 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
         title="Results"
         actionBlock={
           <div className="flex flex-row space-x-4 items-center">
-            { queryResult ? (<div className="text-xs text-gray-300">
-              (Updated {timeSince(new Date(queryResult.updated_at))} ago)
-            </div>) : null }
+            { queryResult ? (
+                <>
+                  <Tooltip content="Results Last Refreshed At" position="bottom" minimal>
+                    <div className="text-xs text-gray-400">
+                      (Updated {timeSince(new Date(queryResult.updated_at))} ago)
+                    </div>
+                  </Tooltip>
+                  <Tooltip content="Latest Score" position="bottom" minimal>
+                    <div className="rounded-md text-white text-xl font-extrabold pr-2 pl-2 pt-0.5 pb-0.5"
+                      style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
+                      > { (queryResult.latest_score || 0.0).toFixed(2) }
+                    </div>
+                  </Tooltip>
+                </>
+              ) : null }
             <Button
               onClick={() => { setCurrrentQuery(query); showQueryEditPane(true); } }
               label="Edit Query"

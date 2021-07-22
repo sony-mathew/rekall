@@ -78,6 +78,7 @@ const QueryModel = () => {
                 scorer={scorer}
                 setCurrrentResource={setCurrrentResource}
                 showPane={setShowPane}
+                currentResource={currentResource}
               />
             </>
           ) : (

@@ -7,8 +7,17 @@ export default function ListPage({
   items = [],
   scorer,
   setCurrrentResource,
-  showPane
+  showPane,
+  currentResource
 }) {
+  const getActiveClassFor = (query) => {
+    if(currentResource && query && currentResource.id == query.id) {
+      return 'bg-gray-200';
+    } else {
+      return '';
+    }
+  }
+
   return (
     <div className="w-full px-4">
       <table className="nui-table nui-table--checkbox">
@@ -19,7 +28,7 @@ export default function ListPage({
         </thead>
         <tbody className="w-full">
           {items.map(query => (
-              <tr key={query.id} className={"cursor-pointer bg-white hover:bg-gray-50"}>
+              <tr key={query.id} className={`cursor-pointer bg-white hover:bg-gray-50 ${getActiveClassFor(query)}`}>
                 <td>
                   <NavLink
                     to={`/query_groups/${query.query_group_id}/queries/${query.id}/results`}
@@ -35,7 +44,7 @@ export default function ListPage({
                       <div>
                         {query.query_text}
                       </div>
-                      <div className="text-xs text-gray-300">
+                      <div className="text-xs text-gray-400">
                         (Updated {timeSince(new Date(query.updated_at))} ago)
                       </div>
                     </div>
