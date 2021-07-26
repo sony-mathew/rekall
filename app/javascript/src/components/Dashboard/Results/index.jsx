@@ -28,6 +28,7 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
   const [currentResource, setCurrrentResource] = useState(false);
 
   const [queryResult, setQueryResult] = useState({});
+  const [userScores, setUserScores] = useState({});
 
   useEffect(() => {
     fetchQueryResult();
@@ -38,6 +39,7 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
       setLoading(true);
       const resultResponse = await resultService.fetchAll(urlParams.queryGroupId, urlParams.queryId);
       setQueryResult(resultResponse.data.result);
+      setUserScores(resultResponse.data.score);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -50,6 +52,7 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
       setLoading(true);
       const resultResponse = await resultService.fetch_fresh_results(urlParams.queryGroupId, urlParams.queryId);
       setQueryResult(resultResponse.data.result);
+      setUserScores(resultResponse.data.score);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -74,7 +77,7 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
                     </div>
                   </Tooltip>
                   <Tooltip content="Latest Score" position="bottom" minimal>
-                    <div className="rounded-md text-white text-xl font-extrabold pr-2 pl-2 pt-0.5 pb-0.5"
+                    <div className="rounded-md text-white text-xl font-semibold pr-2 pl-2 pt-0.5 pb-0.5"
                       style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
                       > { (queryResult.latest_score || 0.0).toFixed(2) }
                     </div>
@@ -103,6 +106,8 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
             queryResult={queryResult}
             items={queryResult.data}
             setCurrrentResource={setCurrrentResource}
+            refreshQueryResult={fetchQueryResult}
+            scores={userScores}
           />
         </>
       ) : (

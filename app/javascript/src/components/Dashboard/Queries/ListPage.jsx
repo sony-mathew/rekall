@@ -37,7 +37,7 @@ export default function ListPage({
                     onClick={e => setCurrrentResource(query) }
                   >
                     <div className="flex flex-row space-x-2 text-gray-900 items-center">
-                      <div className="rounded-md text-white text-xl font-extrabold p-2 items-center"
+                      <div className="rounded flex text-white text-xl font-semibold items-center justify-center w-14 h-10"
                         style={{backgroundColor: colorForBinaryRating(query.latest_score || 0.0)}}
                       > { (query.latest_score || 0.0).toFixed(2) }
                       </div>
