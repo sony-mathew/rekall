@@ -14,7 +14,9 @@ export default function ListPage({
           <tr>
             <th> ID </th>
             <th className="text-left">Name</th>
-            <th className="text-left">Method / Document Fields</th>
+            <th className="text-left">Method</th>
+            <th className="text-left">Document Unique Field</th>
+            <th className="text-left">Document Fields</th>
             <th className="text-left">Actions</th>
           </tr>
         </thead>
@@ -37,7 +39,9 @@ export default function ListPage({
                   </div>
                 </NavLink>
               </td>
-              <td>{queryGroup.http_method} | {queryGroup.document_fields}</td>
+              <td>{queryGroup.http_method}</td>
+              <td>{queryGroup.document_uuid}</td>
+              <td>[{queryGroup.document_fields.join(', ')}]</td>
               <td>
                 <Button
                   onClick={() => { setCurrrentResource(queryGroup); showPane(true); } }
