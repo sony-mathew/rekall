@@ -6,8 +6,14 @@ class ApiRequestManager
   end
 
   def do_post
-    log_req
-    @res = RestClient.post(formatted_uri, formatted_request_body.to_json, custom_headers.merge({ content_type: :json }))
+    log_req 'POST'
+    # @res = RestClient.post(formatted_uri, formatted_request_body.to_json, custom_headers.merge({ content_type: :json }))
+    @res = RestClient::Request.execute(method: :post,
+      url: formatted_uri,
+      payload: formatted_request_body.to_json,
+      headers: custom_headers.merge({ content_type: :json }),
+      verify_ssl: false
+    )
     JSON.parse(@res.body)
   rescue RestClient::ExceptionWithResponse => e
     @errors = e.response
@@ -15,7 +21,7 @@ class ApiRequestManager
   end
 
   def do_get
-    log_req
+    log_req 'GET'
     @res = RestClient.get(formatted_uri, custom_headers)
     JSON.parse(@res.body)
   rescue RestClient::ExceptionWithResponse => e
@@ -31,9 +37,9 @@ class ApiRequestManager
     }
   end
 
-  def log_req
+  def log_req req_method
     puts '#'*50
-    puts "Sending request to #{formatted_uri}"
+    puts "[#{req_method}] #{formatted_uri}"
   end
 
   def formatted_uri
