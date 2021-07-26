@@ -7,13 +7,13 @@ class Api::V1::ResultsController < Api::V1::BaseController
   before_action :validate_score_params, only: [:register_score]
 
   def index
-    render json: { result: @query.active_result, notice: "Fetched the latest query results!" }
+    render json: { result: @query.active_result, score: @query.active_result.active_score, notice: "Fetched the latest query results!" }
   end
 
   def fetch_fresh_results
     @result = @query.fetch_fresh_results!
     if @result && !@result.errors.present?
-      render json: { result: @result, notice: "Fetched the latest query results!" }
+      render json: { result: @result, score: @result.active_score, notice: "Fetched the latest query results!" }
     else
       render json: { error: "Some error occurred." }, status: 422
     end
