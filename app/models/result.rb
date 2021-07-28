@@ -24,8 +24,12 @@ class Result < ApplicationRecord
     active_score.ratings
   end
 
-  def recalculate_final_score!
+  def recalculate_final_score
     self.latest_score = query_group.scorer.calculate_score_for(query_group.document_uuid, ratings, self.data)
+  end
+
+  def recalculate_final_score!
+    recalculate_final_score
     self.save!
     self.latest_score
   end

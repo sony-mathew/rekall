@@ -27,7 +27,7 @@ const handleSuccessResponse = response => {
   if (response) {
     response.success = response.status === 200;
     if (response.data.notice) {
-      Toastr.success(response.data.notice);
+      // Toastr.success(response.data.notice);
     }
   }
   return response;

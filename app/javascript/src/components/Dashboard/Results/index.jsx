@@ -76,7 +76,7 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
                       (Updated {timeSince(new Date(queryResult.updated_at))} ago)
                     </div>
                   </Tooltip>
-                  <Tooltip content="Latest Score" position="bottom" minimal>
+                  <Tooltip content={`Latest Score (${scorer.name})`} position="bottom" minimal>
                     <div className="rounded-md text-white text-xl font-semibold pr-2 pl-2 pt-0.5 pb-0.5"
                       style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
                       > { (queryResult.latest_score || 0.0).toFixed(2) }

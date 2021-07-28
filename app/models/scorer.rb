@@ -23,20 +23,22 @@ class Scorer < ApplicationRecord
     scale.include?(value)
   end
 
+  # References: 
+  # 1. https://machinelearningmedium.com/2017/07/24/discounted-cumulative-gain/
+  # 2. https://towardsdatascience.com/evaluate-your-recommendation-engine-using-ndcg-759a851452d1
   def calculate_score_for(document_uuid, ratings, docs)
     @document_uuid = document_uuid
     @ratings = ratings.with_indifferent_access
     @docs = docs
 
-    # puts "Document UUID: ", document_uuid
-    # puts "Ratings: ", ratings.inspect
-    # ratings: { [doc_uuid]: { pos: 1, value: 1 }}
-    
+    # Struct ratings: { [document_uuid]: { pos: 1, value: 1 }}
     # find best way to process this
-    # { [pos]: [value, doc_uuid ] }
+    # { [pos]: [value] }
     pos_value_map = process_ratings_and_docs
-    # puts "Pos Value Map:", pos_value_map.inspect
-    send("calculate_#{scale_type}_score_for", pos_value_map)
+
+    js = JavascriptEvaluator.new({ code: self.code, params: { docPositionAndValues: pos_value_map }})
+    res = js.result
+    res.to_s.to_f
   end
 
   private
@@ -67,37 +69,6 @@ class Scorer < ApplicationRecord
       end
     end
     pos
-  end
-
-  def calculate_binary_score_for(pos_value_map)
-    # { [position]: [value] }
-    max_pos = pos_value_map.keys.max
-    relevant_documents = 0
-    
-    all_precisions = []
-    relevant_doc_precisions = []
-    1.step(max_pos).each do |i|
-      if pos_value_map[i] == 1
-        relevant_documents += 1
-        relevant_doc_precisions << (relevant_documents.to_f / i)
-      end
-      all_precisions << (relevant_documents.to_f / i)
-    end
-    puts "#"*100
-    puts "Precisions : ", all_precisions.inspect
-    puts "Relevant Precisions : ", relevant_doc_precisions.inspect
-    avg_precision = relevant_doc_precisions.sum.to_f / ([relevant_doc_precisions.size, 1].max)
-    puts "Average Precision : ", avg_precision
-    avg_precision
-  end
-
-  def calculate_graded_score_for(pos_value_map)
-  end
-
-  def calculate_detailed_score_for(pos_value_map)
-  end
-
-  def calculate_custom_score_for(pos_value_map)
   end
 
 end

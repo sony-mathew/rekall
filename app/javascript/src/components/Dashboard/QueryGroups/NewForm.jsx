@@ -16,7 +16,7 @@ const getList = async (service) => {
 
 const preProcessObject = (resource) => {
   resource.request_body = deserializeObject(resource.request_body);
-  resource.document_fields = resource.document_fields.split(',');
+  resource.document_fields = resource.document_fields.split(',').map((val) => val.trim());
 
   if(typeof resource.api_source_id === 'object' && resource.api_source_id !== null) {
     resource.api_source_id = resource.api_source_id.value;
@@ -46,7 +46,7 @@ const defaultValues = (currentResource) => {
 
   resourceObj.request_body = serializeObject(resourceObj.request_body);
   if(Array.isArray(resourceObj.document_fields)) {
-    resourceObj.document_fields = resourceObj.document_fields.join(',');
+    resourceObj.document_fields = resourceObj.document_fields.join(', ');
   }
 
   return resourceObj;

@@ -16,6 +16,7 @@ class ApiRequestManager
     )
     JSON.parse(@res.body)
   rescue RestClient::ExceptionWithResponse => e
+    puts e.inspect
     @errors = e.response
     e.response
   end
