@@ -15,12 +15,14 @@ const COLORS = {
 
 const colorForScaleValue = (scaleSize = 2, scaleValue = 0) => {
   let roundedScaleValue = Math.round(scaleValue);
-  return COLORS[scaleSize][roundedScaleValue];
+  let defaultColor = COLORS[2][1];
+  return COLORS[scaleSize][roundedScaleValue] || defaultColor;
 }
 
 const colorForBinaryRating = (rating = 0, scaleSize = 10) => {
   let roundedRating = Math.round(rating * 10);
-  return COLORS[scaleSize][roundedRating];
+  let defaultColor = COLORS[2][1];
+  return COLORS[scaleSize][roundedRating] || defaultColor;
 }
 
 export { COLORS, colorForScaleValue, colorForBinaryRating };
