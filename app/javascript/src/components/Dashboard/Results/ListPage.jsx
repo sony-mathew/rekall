@@ -3,6 +3,7 @@ import { Button, Card, Tooltip } from "neetoui";
 
 import { colorForScaleValue } from 'common/colorHelper';
 import resultService from "apis/resultService";
+import QueryGroups from "../QueryGroups";
 
 export default function ListPage({
   scorer,
@@ -17,7 +18,7 @@ export default function ListPage({
 
   const [showRatingPaneFor, setShowRatingPaneFor] = useState(false);
 
-  const getUserRatingFor = (doc) => {
+  const displayUserRatingFor = (doc) => {
     if(!doc || !scores) {
       return (<Button
         onClick={() => { setCurrrentResource(doc); setShowRatingPaneFor(doc); } }
@@ -46,33 +47,40 @@ export default function ListPage({
     }
   }
 
-  const getFieldsFor = (doc) => {
+  const displayFieldsFor = (doc) => {
+    let allFields = {};
+    for(let i = 0; i < queryGroup['document_fields'].length; ++i) {
+      const key = queryGroup['document_fields'][i];
+      allFields[key] = doc[key];
+    }
+
     return (
       <>
-      <div className="flex flex-row space-x-4 text-gray-900">
-        <div className="flex-1 flex flex-col">
-          {queryGroup['document_fields'].map(field => {
-            return (
-              <div key={field} className="flex flex-row space-x-4 text-gray-900">
-                <div>{field}: </div>
-                <div>{doc[field]}</div>
-              </div>
-            );
-          })}
+        <div className="flex flex-row space-x-4 text-gray-900">
+          <div className="flex-1 flex flex-col">
+            {Object.keys(allFields).map(field => {
+              return (
+                <div key={field} className="flex flex-row space-x-4 text-gray-900">
+                  <div>{field}: </div>
+                  <div>{allFields[field]}</div>
+                </div>
+              );
+            })}
+          </div>
+          <div>
+            <Tooltip content="Rate this result" position="bottom" minimal>
+              {displayUserRatingFor(doc)}
+            </Tooltip>
+          </div>
         </div>
-        <div>
-          <Tooltip content="Rate this result" position="bottom" minimal>
-            {getUserRatingFor(doc)}
-          </Tooltip>
-        </div>
-      </div>
-    </>);
+      </>
+    );
   }
 
   const getRatingsPanelFor = (doc) => {
     const rateDoc = async (value) => {
       try {
-        console.log(value, doc);
+        // console.log(value, doc);
         const payload = {
           doc: doc,
           score: value
@@ -112,7 +120,7 @@ export default function ListPage({
       {items.map(doc => (
         <Card key={doc[queryGroup['document_uuid']]} className="relative">
           <Card.Title>{doc[queryGroup['document_uuid']]}</Card.Title>
-          <div>{getFieldsFor(doc)}</div>
+          <div>{displayFieldsFor(doc)}</div>
           { (showRatingPaneFor &&  showRatingPaneFor === doc) ? 
               (<div className="absolute inset-y-1 right-4">{getRatingsPanelFor(doc)}</div>)
               : ''
