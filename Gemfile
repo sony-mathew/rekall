@@ -65,6 +65,9 @@ gem "letter_opener", group: :development
 # send http calls
 gem "rest-client"
 
+# for executing javascript
+gem "mini_racer"
+
 group :development, :test do
   # Rails integration for factory-bot
   gem "factory_bot_rails"
