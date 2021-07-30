@@ -1,15 +1,16 @@
 # Interface for using this module:
 #
 # Example code:
-#         code = `var userName = name();
-#           var helloMessage = `Hello ${userName}`;
-#           helloMessage`;
-#         params = {
-#           name: "Sony"
-#         };
-#         js = JavascriptEvaluator.new({ code: code, params: params)
-#         js.result
-# => "Hello Sony"
+#     code = "var userObj = user();
+#         userObj.address = 'Kerala';
+#         userObj";
+#     params = {
+#         user: { name: 'John Doe', age: 20 }
+#     };
+#     js = JavascriptEvaluator.new({ code: code, params: params })
+#     js.result
+#
+# => {"name"=>"John Doe", "age"=>20, "address"=>"Kerala"}
 
 class JavascriptEvaluator
   attr_accessor :options, :errors
