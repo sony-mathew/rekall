@@ -37,8 +37,8 @@ class Scorer < ApplicationRecord
     pos_value_map = process_ratings_and_docs
 
     js = JavascriptEvaluator.new({ code: self.code, params: { docPositionAndValues: pos_value_map }})
-    res = js.result
-    res.to_s.to_f
+    evaluated_result = js.result
+    evaluated_result.to_s.to_f
   end
 
   private

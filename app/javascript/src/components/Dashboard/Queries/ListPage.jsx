@@ -6,6 +6,7 @@ import { timeSince } from "common/timeHelper";
 
 export default function ListPage({
   items = [],
+  queryGroup,
   scorer,
   setCurrrentResource,
   showPane,
@@ -24,7 +25,7 @@ export default function ListPage({
       <table className="nui-table nui-table--checkbox">
         <thead>
           <tr>
-            <th className="text-left">Queries</th>
+            <th className="text-left"> {queryGroup.name} </th>
           </tr>
         </thead>
         <tbody className="w-full">

@@ -143,7 +143,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
 
           <Input label="Unique Document Field" name="document_uuid" type="String" className="mb-6" />
           <Input label="Fields to Display" name="document_fields" type="String" className="mb-6" />
-          <Textarea label="Transform Response" name="transform_response" rows={8} className="mb-10" />
+          <Textarea label="Code to Transform Response Data" name="transform_response" rows={8} className="mb-24"/>
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
               onClick={onClose}

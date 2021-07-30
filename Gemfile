@@ -68,6 +68,9 @@ gem "rest-client"
 # for executing javascript
 gem "mini_racer"
 
+# for templating
+gem "liquid"
+
 group :development, :test do
   # Rails integration for factory-bot
   gem "factory_bot_rails"

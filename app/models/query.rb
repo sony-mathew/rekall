@@ -13,7 +13,7 @@ class Query < ApplicationRecord
 
   def fetch_fresh_results!
     api_response = fetch_api_results
-    if api_response.presence
+    if api_response.presence &&  !(api_response.is_a?(Hash) && api_response[:error].present?)
       result = Result.find_or_initialize_by({
         query_id: self.id,
         query_group_id: self.query_group_id
@@ -22,6 +22,8 @@ class Query < ApplicationRecord
       result.user_id ||= self.user_id
       result.save!
       result
+    else
+      api_response
     end
   end
 

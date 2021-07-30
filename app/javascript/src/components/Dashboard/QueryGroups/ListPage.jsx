@@ -1,12 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "neetoui";
+import QueryGroups from ".";
 
 export default function ListPage({
   items = [],
   setCurrrentResource,
   showPane
 }) {
+  const displayFieldsFor = (queryGroup) => {
+    if(Array.isArray(queryGroup.document_fields)) {
+      return queryGroup.document_fields.join(', ');
+    }
+    return queryGroup.document_fields;
+  }
+
   return (
     <div className="w-full px-4">
       <table className="nui-table nui-table--checkbox">
@@ -41,7 +49,7 @@ export default function ListPage({
               </td>
               <td>{queryGroup.http_method}</td>
               <td>{queryGroup.document_uuid}</td>
-              <td>[{queryGroup.document_fields.join(', ')}]</td>
+              <td>[{displayFieldsFor(queryGroup)}]</td>
               <td>
                 <Button
                   onClick={() => { setCurrrentResource(queryGroup); showPane(true); } }

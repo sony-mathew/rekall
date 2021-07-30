@@ -51,13 +51,13 @@ class ApiRequestManager
   end
 
   def template_transform(str)
-    template = ERB.new(str)
-    template.result_with_hash(query: @options[:query_text])
+    template = Liquid::Template.parse(str)
+    template.render('query' => @options[:query_text], 'page_size' => @options[:page_size], 'page_number' => @options[:page_number])
   end
 
   def formatted_request_body
-    template = ERB.new(JSON.generate(@options[:body]))
-    res = template.result_with_hash(query: @options[:query_text])
-    JSON.parse(res)
+    template = Liquid::Template.parse(JSON.generate(@options[:body]))
+    rendered_template = template.render('query' => @options[:query_text], 'page_size' => @options[:page_size], 'page_number' => @options[:page_number])
+    JSON.parse(rendered_template)
   end
 end

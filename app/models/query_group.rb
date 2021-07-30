@@ -15,13 +15,15 @@ class QueryGroup < ApplicationRecord
   validates :name, :http_method, :document_fields, presence: true
   validate :valid_page_size
 
-  def get_results_for(query_text)
+  def get_results_for(query_text, page_number = 0)
     options = {
       host: api_source.host,
       headers: api_source.request,
       query_text: query_text,
       query_string: self.query_string,
-      body: self.request_body
+      body: self.request_body,
+      page_size: page_size,
+      page_number: page_number
     }
     req = ApiRequestManager.new(options)
     if http_method == 'GET'
@@ -44,12 +46,12 @@ class QueryGroup < ApplicationRecord
   def formatted_response(data)
     if transform_response.present?
       begin
-        template = ERB.new(transform_response)
-        res = template.result_with_hash(data: data)
-        JSON.parse(res)
+        js = JavascriptEvaluator.new({ code: transform_response, params: { data: data }})
+        evaluated_result = js.result
+        evaluated_result
       rescue Exception => e
         { 
-          error: "Something happened while trasnforming the response",
+          error: "Something happened while transforming the response",
           transform_response: transform_response,
           data: data,
           details: e.inspect
