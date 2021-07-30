@@ -158,7 +158,8 @@ GEM
       addressable (~> 2.7)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8-node (15.14.0.1)
+    libv8-node (15.14.0.1-x86_64-darwin-20)
+    liquid (5.0.1)
     listen (3.3.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -357,6 +358,7 @@ DEPENDENCIES
   honeybadger
   jbuilder (>= 2.7)
   letter_opener
+  liquid
   listen (~> 3.2)
   mail_interceptor
   mini_racer
