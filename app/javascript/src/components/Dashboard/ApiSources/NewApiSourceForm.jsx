@@ -46,7 +46,7 @@ export default function NewApiSourceForm({ onClose, refetch, apiSource }) {
           <Input label="Name" name="name" className="mb-6" />
           <Input label="Environment" name="environment" className="mb-6" />
           <Input label="Host" name="host" className="mb-6" />
-          <Textarea label="Request" name="request" rows={8} />
+          <Textarea label="Request" name="request" rows={8} className="mb-24"/>
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
               onClick={onClose}

@@ -74,6 +74,7 @@ const QueryModel = () => {
             {queries.length ? (
             <>
               <ListPage
+                queryGroup={queryGroup}
                 items={queries}
                 scorer={scorer}
                 setCurrrentResource={setCurrrentResource}

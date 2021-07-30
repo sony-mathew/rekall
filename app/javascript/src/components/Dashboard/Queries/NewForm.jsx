@@ -88,7 +88,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
             isSearchable={true}
             name="query_group_id"
             options={queryGroupsOptions}
-            className="mb-6"
+            className="mb-24"
           />
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
