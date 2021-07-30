@@ -5,13 +5,16 @@ import { Input, Textarea } from "neetoui/formik";
 import { Button } from "neetoui";
 import apiSourceService from "apis/apiSourceService";
 
+import { serializeObject, deserializeObject } from "common/jsonHelper";
+
 export default function NewApiSourceForm({ onClose, refetch, apiSource }) {
-  const handleSubmit = async values => {
+  const handleSubmit = async resource => {
     try {
+      resource.request = deserializeObject(resource.request);
       if(apiSource) {
-        await apiSourceService.update(apiSource.id, values);
+        await apiSourceService.update(apiSource.id, resource);
       } else {
-        await apiSourceService.create(values);
+        await apiSourceService.create(resource);
       }
       refetch();
       onClose();
@@ -21,14 +24,14 @@ export default function NewApiSourceForm({ onClose, refetch, apiSource }) {
   };
 
   const getInitialValues = () => {
-    const initialValues = apiSource || {
+    const resourceObj = apiSource || {
       name: "",
       host: "",
       environment: "",
-      request: []
+      request: {}
     };
-
-    return initialValues;
+    resourceObj.request = serializeObject(resourceObj.request);
+    return resourceObj;
   };
 
   return (
@@ -38,7 +41,7 @@ export default function NewApiSourceForm({ onClose, refetch, apiSource }) {
       validationSchema={yup.object({
         name: yup.string().required("Name is required"),
         host: yup.string().required("Host is required"),
-        environment: yup.string().required("Host is required"),
+        environment: yup.string().required("Environment is required"),
       })}
     >
       {({ isSubmitting }) => (
@@ -46,7 +49,7 @@ export default function NewApiSourceForm({ onClose, refetch, apiSource }) {
           <Input label="Name" name="name" className="mb-6" />
           <Input label="Environment" name="environment" className="mb-6" />
           <Input label="Host" name="host" className="mb-6" />
-          <Textarea label="Request" name="request" rows={8} className="mb-24"/>
+          <Textarea label="Request Headers" name="request" rows={8} className="mb-24"/>
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
               onClick={onClose}
