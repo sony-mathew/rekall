@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_22_180736) do
+ActiveRecord::Schema.define(version: 2021_08_01_170843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -158,6 +158,36 @@ ActiveRecord::Schema.define(version: 2021_07_22_180736) do
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "team", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.uuid "user_id", null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "team_members", force: :cascade do |t|
+    t.uuid "member_id", null: false
+    t.integer "role", default: 0, null: false
+    t.bigint "team_id"
+    t.uuid "user_id", null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "team_resources", force: :cascade do |t|
+    t.bigint "resourceable_id"
+    t.string "resourceable_type"
+    t.bigint "team_id"
+    t.uuid "user_id", null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resourceable_type", "resourceable_id"], name: "index_team_resources_on_resourceable_type_and_resourceable_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
