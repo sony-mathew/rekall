@@ -23,16 +23,32 @@ tzdata \
 && rm -rf /var/cache/apk/* \
 && mkdir -p $APP_PATH 
 
+# RUN apk add --no-cache build-base clang
 
+ENV CC=clang
+ENV CXX=clang++
+RUN gem install 'specific_install'
+RUN gem specific_install -l "https://github.com/sagarjauhari/mini_racer"
+
+# RUN wget https://nodejs.org/dist/v15.14.0/node-v15.14.0-linux-x64.tar.xz && tar -xf node-v15.14.0-linux-x64.tar.xz
+# RUN NODE=/node-v15.14.0-linux-x64/bin/node gem install libv8-node -v '15.14.0.1' --source 'https://rubygems.org/'
+# RUN NODE=/node-v15.14.0-linux-x64/bin/node gem install mini_racer -v '0.4.0' --source 'https://rubygems.org/'
 RUN gem install bundler --version "$BUNDLE_VERSION"
 
+# RUN pwd
+# RUN ls -l
+# RUN echo $APP_PATH
+COPY . $APP_PATH
+RUN rm -f $APP_PATH/Gemfile.lock
 # navigate to app directory
 WORKDIR $APP_PATH
 
-COPY Gemfile Gemfile.lock ./
+# COPY Gemfile Gemfile.lock ./
 COPY package.json yarn.lock ./
 
-RUN bundle check || bundle install --jobs=8
+# RUN bundle check || bundle install --jobs=8
+RUN bundle lock --add-platform x86_64-linux-musl
+RUN rm -f Gemfile.lock && bundle install
 RUN yarn install --check-files
 
 COPY . .
