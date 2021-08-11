@@ -16,3 +16,8 @@ TBD
 # Development
 #TBD
 
+Current docker build command
+
+```
+docker build -f ./Dockerfile.dev -t rekall-dev:1.0 --no-cache . | tee rekall.build.log
+```
