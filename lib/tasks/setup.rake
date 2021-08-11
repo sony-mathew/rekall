@@ -122,7 +122,7 @@ def create_scorers!
   }
   Scorer.create! attributes
   attributes = {
-    name: 'Normlaized Discounted Cumulative Gain (nDCG)',
+    name: 'Normalized Discounted Cumulative Gain (nDCG)',
     code: "// normalized Discounted Cumulative Gain (nDCG)
     var allDocPositionAndValues = docPositionAndValues();
     
