@@ -38,19 +38,33 @@ RUN gem install bundler --version "$BUNDLE_VERSION"
 # RUN pwd
 # RUN ls -l
 # RUN echo $APP_PATH
-COPY . $APP_PATH
-RUN rm -f $APP_PATH/Gemfile.lock
+# COPY . $APP_PATH
+# RUN rm -f $APP_PATH/Gemfile.lock
 # navigate to app directory
 WORKDIR $APP_PATH
 
 # COPY Gemfile Gemfile.lock ./
-COPY package.json yarn.lock ./
+# COPY package.json yarn.lock ./
 
 # RUN bundle check || bundle install --jobs=8
-RUN bundle lock --add-platform x86_64-linux-musl
-RUN rm -f Gemfile.lock && bundle install
-RUN yarn install --check-files
+# RUN bundle lock --add-platform x86_64-linux-musl
+# RUN rm -f Gemfile.lock && bundle install
+# RUN yarn install --check-files
+
+
+# COPY Gemfile ./
+# COPY package.json yarn.lock ./
+
+# RUN bundle config set --local deployment 'true'
+# RUN rm -f Gemfile.lock
+# RUN bundle install
 
 COPY . .
+RUN rm -f Gemfile.lock
+RUN bundle lock --add-platform x86_64-linux-musl
+RUN bundle install
+RUN yarn install --check-files
 
 EXPOSE $RAILS_PORT
+
+CMD rails s -p $RAILS_PORT -b 0.0.0.0
