@@ -57,4 +57,13 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # for whitelisting hosts
+  if ENV["WHITELISTED_HOSTS"].present?
+    ENV["WHITELISTED_HOSTS"].split(',').each do |host|
+      config.hosts << host
+    end
+  else
+    config.hosts.clear
+  end
 end
