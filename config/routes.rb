@@ -60,5 +60,6 @@ Rails.application.routes.draw do
   end
 
   root "home#index"
+  get "/healthcheck", to: proc { [200, {}, [{ status: "Up", timestamp: Time.now.to_s }.to_json]] }
   get '*path', to: 'home#index', via: :all
 end
