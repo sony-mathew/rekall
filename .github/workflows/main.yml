@@ -47,6 +47,9 @@ jobs:
         # uses: docker/build-push-action@a66e35b9cbcf4ad0ea91ffcaf7bbad63ad9e0229
         uses: docker/build-push-action@v2.7.0
         with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: ghcr.io
           push: true
           tags: |
             ${{ github.repository }}:${{ github.sha }}
