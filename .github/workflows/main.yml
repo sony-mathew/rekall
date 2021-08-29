@@ -49,6 +49,6 @@ jobs:
         with:
           push: true
           tags: |
-            $GITHUB_REPOSITORY:$GITHUB_SHA
+            ${{ github.repository }}:${{ github.sha }}
             ${{ github.repository_owner }}/rekall:latest
             ghcr.io/${{ github.repository_owner }}/rekall:latest
