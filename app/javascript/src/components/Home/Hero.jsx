@@ -3,17 +3,12 @@ import { Button } from "neetoui";
 
 export default function Hero() {
   const features = [
-    "Uses Rails, React, Tailwind CSS and Webpacker.",
-    "Uses Devise, Honeybadger, Sidekiq, PostgreSQL, ActiveAdmin.",
-    "Heroku ready. Push to Heroku and it will work.",
-    "Uses slim for cleaner syntax over erb and better performance over haml.",
-    "Intercepts all outgoing emails in non production environment using gem mail_interceptor.",
-    "Uses SemaphoreCI for continuous testing.",
-    "Content compression via Rack::Deflater.",
-    "Auto-formats Ruby code with rubocop.",
-    "Auto-formats JavaScript and CSS code with prettier.",
-    "Performs background job processing 'inline' for heroku env. It means heroku can deliver emails.",
-    "Letter opener gem for development.",
+    "Ability to integrate API sources to fetch search results from application endpoints.",
+    "Supports custom algorithms for ranking (You can write your own algorithms in javascript).",
+    "Supports GET and POST API calls with custom headers.",
+    "Ability to transform the response of an API to desired form (using javascript).",
+    "Ships with four default scorers: Average Precision (AP), Cumulative Gain (CG), Discounted Cumulative Gain (DCG) and Normlaized Cumulative Gain (nDCG).",
+    "Fully containarized. Deploy this to any platform of your choice."
   ];
 
   return (
@@ -21,8 +16,7 @@ export default function Hero() {
       <div className="flex flex-col items-center justify-center max-w-3xl p-8 m-auto">
         <h1 className="mb-3 text-4xl font-bold">Rekall</h1>
         <p className="mx-auto mb-6 text-lg text-center text-gray-800">
-          Don&apos;t reinvent the rekall. Use sane defaults to bootstrap your
-          react-rails project!
+          Open source tool to measure search relevance.
         </p>
         <Features features={features} />
         <div className="flex items-center justify-center mt-6">
