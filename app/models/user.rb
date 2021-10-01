@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :api_sources
   has_many :scorers
   has_many :query_groups
+  has_many :team_associations, class_name: 'TeamMember', foreign_key: 'member_id'
+  has_many :teams, through: :team_associations
+  has_many :owned_teams, class_name: 'Team', foreign_key: 'user_id'
 
   before_save :ensure_authentication_token_is_present
 
