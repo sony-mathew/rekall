@@ -59,7 +59,10 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :teams, only: [:index, :create, :show, :update, :destroy]
+      resources :teams, only: [:index, :create, :show, :update, :destroy] do
+        resources :members, controller: "team_members", only: [:index, :create, :show, :update, :destroy]
+        resources :resources, controller: "team_resources", only: [:index, :create, :show, :update, :destroy]
+      end
     end
   end
 
