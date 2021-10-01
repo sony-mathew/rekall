@@ -160,15 +160,6 @@ ActiveRecord::Schema.define(version: 2021_08_01_170843) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "team", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "description"
-    t.uuid "user_id", null: false
-    t.boolean "is_deleted", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "team_members", force: :cascade do |t|
     t.uuid "member_id", null: false
     t.integer "role", default: 0, null: false
@@ -188,6 +179,15 @@ ActiveRecord::Schema.define(version: 2021_08_01_170843) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["resourceable_type", "resourceable_id"], name: "index_team_resources_on_resourceable_type_and_resourceable_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.uuid "user_id", null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -1,6 +1,6 @@
 class AddTeamsTable < ActiveRecord::Migration[6.1]
   def change
-    create_table :team do |t|
+    create_table :teams do |t|
       t.string      :name, null: false
       t.string      :description
       
