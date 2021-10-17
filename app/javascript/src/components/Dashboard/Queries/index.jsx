@@ -64,7 +64,7 @@ const QueryModel = () => {
         actionBlock={
           <Button
             onClick={() => { setCurrrentResource(false); setShowPane(true); } }
-            label="New Query"
+            label="Add New Query"
             icon="ri-add-line"
           />
         }

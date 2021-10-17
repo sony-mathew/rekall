@@ -12,32 +12,30 @@ import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
 import { Header, SubHeader } from "neetoui/layouts";
 
-import queryGroupService from "apis/queryGroupService";
+import teamService from "apis/teamService";
 
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
 import QueryModel from "./../Queries";
-// import DeleteAlert from "./DeleteAlert";
 
-const QueryGroupsLanding = () => {
+const TeamsLanding = () => {
   const [loading, setLoading] = useState(true);
   const [showPane, setshowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
 
-  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [queryGroups, setQueryGroups] = useState([]);
+  const [teams, setTeams] = useState([]);
   
 
   useEffect(() => {
-    fetchQueryGroups();
+    fetchTeams();
   }, []);
 
-  const fetchQueryGroups = async () => {
+  const fetchTeams = async () => {
     try {
       setLoading(true);
-      const response = await queryGroupService.fetchAll();
-      setQueryGroups(response.data);
+      const response = await teamService.fetchAll();
+      setTeams(response.data);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -51,16 +49,16 @@ const QueryGroupsLanding = () => {
   return (
     <>
       <Header
-        title="Query Groups"
+        title="Teams"
         actionBlock={
           <Button
             onClick={() => { setCurrrentResource(false); setshowPane(true); } }
-            label="Create Query Group"
+            label="Create Team"
             icon="ri-add-line"
           />
         }
       />
-      {queryGroups.length ? (
+      {teams.length ? (
         <>
           <SubHeader
             searchProps={{
@@ -70,7 +68,7 @@ const QueryGroupsLanding = () => {
             }}
           />
           <ListPage
-            items={queryGroups}
+            items={teams}
             setCurrrentResource={setCurrrentResource}
             showPane={setshowPane}
           />
@@ -78,16 +76,16 @@ const QueryGroupsLanding = () => {
       ) : (
         <EmptyState
           image={EmptyNotesListImage}
-          title="Looks like you don't have any Query Groups!"
-          subtitle="Query groups represent a group of queries with same request settings. Add your query groups and add search queries in them."
+          title="Looks like you don't have any teams!"
+          subtitle="Teams are the best way to colloborate. You can share your query groups and api sources to collaborate with your team members."
           primaryAction={() => setshowPane(true)}
-          primaryActionLabel="Add New Query Group"
+          primaryActionLabel="Create Team"
         />
       )}
       <NewPane
         showPane={showPane}
         setShowPane={setshowPane}
-        fetchResources={fetchQueryGroups}
+        fetchResources={fetchTeams}
         currentResource={currentResource}
         setCurrrentResource={setCurrrentResource}
       />
@@ -103,19 +101,22 @@ const QueryGroupsLanding = () => {
 };
 
 
-const QueryGroups = () => {
+const Teams = () => {
   let { path, url } = useRouteMatch();
 
   return (
     <Switch>
       <Route exact path={path}>
-        <QueryGroupsLanding />
+        <TeamsLanding />
       </Route>
-      <Route path={`${path}/:queryGroupId/queries`}>
+      <Route path={`${path}/:teamId/members`}>
+        <QueryModel />
+      </Route>
+      <Route path={`${path}/:teamId/resources`}>
         <QueryModel />
       </Route>
     </Switch>
   );
 }
 
-export default QueryGroups;
+export default Teams;
