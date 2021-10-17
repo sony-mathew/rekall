@@ -5,7 +5,7 @@ Rekall is an open source tool to measure search relevance. This is highly inspir
 Often times real world search systems have multiple moving parts and pipelines to support query understanding, spell correction, merging results from multiple indices on application layer etc. The final search results are only seen as the output of an application API endpoint. Rekall was born out of this particular need to integrate application endpoints to measure search quality and relevance.
 
 # Features
-* Ability to integrate API sources for fetch search results
+* Ability to integrate API sources to fetch search results from application endpoints
 * Supports GET and POST API calls with custom headers
 * Ability to transform the response of an API to desired form (using javascript)
 * Supports custom algorithms for ranking (You can write your own algorithms in javascript)

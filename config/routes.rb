@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: [:show, :create, :update, :destroy], constraints: { id: /.*/ }
+      
       resources :notes, only: [:index, :create] do
         collection do
           post 'bulk_delete'
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
 
       resources :api_sources, only: [:index, :create, :show, :update, :destroy]
       resources :scorers, only: [:index, :create, :show, :update, :destroy]
+      
       resources :query_groups, only: [:index, :create, :show, :update, :destroy] do
         resources :queries, only: [:index, :create, :show, :update, :destroy] do
           resources :results, only: [:index, :show, :update, :destroy] do
@@ -55,6 +57,11 @@ Rails.application.routes.draw do
             end
           end
         end
+      end
+
+      resources :teams, only: [:index, :create, :show, :update, :destroy] do
+        resources :members, controller: "team_members", only: [:index, :create, :show, :update, :destroy]
+        resources :resources, controller: "team_resources", only: [:index, :create, :show, :update, :destroy]
       end
     end
   end
