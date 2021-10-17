@@ -12,7 +12,7 @@ class Api::V1::TeamMembersController < Api::V1::BaseController
   def create
     @member_association = @team.member_associations.new(member_params.merge(user: current_user))
     if @member_association.save
-      render json: { team: @member_association, notice: "#{@member_association.user.name} has been added to the team!" }
+      render json: { team: @team, member_association: @member_association, user: @member_association.member, notice: "#{@member_association.user.name} has been added to the team!" }
     else
       render json: { error: @member_association.errors.full_messages.to_sentence }, status: 422
     end
