@@ -5,9 +5,9 @@ import Navbar from "components/Common/Navbar";
 
 import PasswordEdit from "./Account/Passwords/Edit";
 import Profile from "./Account/Profile";
-import Notes from "./Notes";
 import ApiSources from "./ApiSources";
 import QueryGroups from "./QueryGroups";
+import Teams from "./Team";
 
 const Home = () => {
   return (
@@ -19,6 +19,7 @@ const Home = () => {
           <Route exact path="/my/password/edit" component={PasswordEdit} />
           <Route exact path="/my/profile" component={Profile} />
           <Route path="/query_groups" component={QueryGroups} />
+          <Route path="/teams" component={Teams} />
           <Redirect from="/" to="/api_sources" />
         </Switch>
       </div>

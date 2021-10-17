@@ -5,7 +5,7 @@ class Api::V1::TeamsController < Api::V1::BaseController
 
   def index
     teams = current_user.teams.active + current_user.owned_teams.active
-    render json: teams
+    render json: teams.uniq
   end
 
   def create

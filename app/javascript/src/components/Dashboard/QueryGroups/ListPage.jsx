@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "neetoui";
-import QueryGroups from ".";
 
 export default function ListPage({
   items = [],
