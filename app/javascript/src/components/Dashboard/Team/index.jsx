@@ -3,8 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
   useRouteMatch
 } from "react-router-dom";
 import { Button, PageLoader } from "neetoui";
@@ -16,7 +14,7 @@ import teamService from "apis/teamService";
 
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
-import QueryModel from "./../Queries";
+import TeamMembers from "./../TeamMembers";
 
 const TeamsLanding = () => {
   const [loading, setLoading] = useState(true);
@@ -89,13 +87,6 @@ const TeamsLanding = () => {
         currentResource={currentResource}
         setCurrrentResource={setCurrrentResource}
       />
-      {/* showDeleteAlert && (
-        <DeleteAlert
-          selectedNoteIds={selectedNoteIds}
-          onClose={() => setShowDeleteAlert(false)}
-          refetch={fetchApiSources}
-        />
-      ) */}
     </>
   );
 };
@@ -110,10 +101,10 @@ const Teams = () => {
         <TeamsLanding />
       </Route>
       <Route path={`${path}/:teamId/members`}>
-        <QueryModel />
+        <TeamMembers />
       </Route>
       <Route path={`${path}/:teamId/resources`}>
-        <QueryModel />
+        <TeamMembers />
       </Route>
     </Switch>
   );
