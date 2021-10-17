@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2.7.0
         with:
           context: .
-          push: true
+          push: false
           tags: |
             ${{ github.repository }}:${{ github.sha }}
             ${{ github.repository_owner }}/rekall:latest
