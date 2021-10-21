@@ -5,7 +5,8 @@ import { Button } from "neetoui";
 export default function ListPage({
   items = [],
   setCurrrentResource,
-  showPane
+  showPane,
+  setShowDeleteAlert
 }) {
   const displayFieldsFor = (queryGroup) => {
     if(Array.isArray(queryGroup.document_fields)) {
@@ -48,12 +49,18 @@ export default function ListPage({
               </td>
               <td>{queryGroup.http_method}</td>
               <td>{queryGroup.document_uuid}</td>
-              <td>[{displayFieldsFor(queryGroup)}]</td>
-              <td>
+              <td>{displayFieldsFor(queryGroup)}</td>
+              <td className="flex flex-row space-x-2">
                 <Button
                   onClick={() => { setCurrrentResource(queryGroup); showPane(true); } }
                   label=""
                   icon="ri-pencil-line"
+                />
+                <Button
+                  onClick={() => { setCurrrentResource(queryGroup); setShowDeleteAlert(true); } }
+                  label=""
+                  icon="ri-delete-bin-7-line"
+                  style="danger"
                 />
               </td>
             </tr>

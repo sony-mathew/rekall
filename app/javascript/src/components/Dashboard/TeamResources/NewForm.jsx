@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import * as yup from "yup";
 import { Formik, Form } from "formik";
-import { Input, Select } from "neetoui/formik";
+import { Select } from "neetoui/formik";
 import { Button } from "neetoui";
 
 import teamResourceService from "apis/teamResourceService";
@@ -110,7 +109,6 @@ export default function NewForm({ onClose, refetch, currentResource, team }) {
             className="mb-6"
           />
           }
-          Picked: {values.resourceable_type && values.resourceable_type.value}
           <div className="nui-pane__footer nui-pane__footer--absolute">
             <Button
               onClick={onClose}

@@ -4,6 +4,7 @@ class QueryGroup < ApplicationRecord
   belongs_to :user
   belongs_to :api_source, class_name: 'ApiSource', foreign_key: 'api_source_id'
   belongs_to :scorer, class_name: 'Scorer', foreign_key: 'scorer_id'
+  has_many :team_resource_associations, class_name: 'TeamResource', as: 'resourceable'
   has_many :queries
 
   enum http_method: {
