@@ -7,7 +7,8 @@ export default function ListPage({
   team,
   setCurrrentResource,
   showPane,
-  currentResource
+  currentResource,
+  setShowDeleteAlert
 }) {
   return (
     <div className="w-full px-4">
@@ -18,8 +19,8 @@ export default function ListPage({
             <th className="text-left"> Name </th>
             <th className="text-left"> Email </th>
             <th className="text-left"> Role </th>
-            <th className="text-left"> Actions</th>
             <th className="text-left"> Updated At </th>
+            <th className="text-left"> Actions</th>
           </tr>
         </thead>
         <tbody className="w-full">
@@ -30,16 +31,22 @@ export default function ListPage({
                 <td>{teamMember.member.email}</td>
                 <td>{teamMember.role}</td>
                 <td>
+                  <div className="text-xs text-gray-400">
+                    {timeSince(new Date(teamMember.updated_at))} ago
+                  </div>
+                </td>
+                <td className="flex flex-row space-x-2">
                   <Button
                     onClick={() => { setCurrrentResource(teamMember); showPane(true); } }
                     label=""
                     icon="ri-pencil-line"
                   />
-                </td>
-                <td>
-                  <div className="text-xs text-gray-400">
-                    {timeSince(new Date(teamMember.updated_at))} ago
-                  </div>
+                  <Button
+                    onClick={() => { setCurrrentResource(teamMember); setShowDeleteAlert(true); } }
+                    label=""
+                    icon="ri-delete-bin-7-line"
+                    style="danger"
+                  />
                 </td>
               </tr>
           ))}

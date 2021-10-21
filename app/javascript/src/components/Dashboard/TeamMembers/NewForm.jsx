@@ -57,7 +57,7 @@ export default function NewForm({ onClose, refetch, currentResource, team }) {
     >
       {({ isSubmitting }) => (
         <Form>
-          <Input label="Email" name="email" className="mb-6" />
+          <Input label="Email" name="email" className="mb-6" disabled={currentResource && currentResource.id}/>
           <Select
             label="Role"
             placeholder="Select a Role"
