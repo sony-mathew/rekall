@@ -14,6 +14,12 @@ const getList = async (service) => {
   return response.data.map((resource) => ({ value: resource.id, label: resource.name }));
 }
 
+const isGetRequest = (values) => {
+  return values && values.http_method &&
+    ((typeof values.http_method === 'object' && values.http_method.value === "GET") || 
+    (values.http_method === "GET" ));
+}
+
 const preProcessObject = (resource) => {
   resource.request_body = deserializeObject(resource.request_body);
   resource.document_fields = resource.document_fields.split(',').map((val) => val.trim());
@@ -103,7 +109,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
         document_fields: yup.string().required("Document fields are required"),
       })}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, values }) => (
         <Form>
           <Input label="Name" name="name" className="mb-6" />
           <Select
@@ -139,8 +145,10 @@ export default function NewForm({ onClose, refetch, currentResource }) {
           />
 
           <Input label="Query String" name="query_string" rows={8} className="mb-6" />
-          <Textarea label="Request Body" name="request_body" rows={8} className="mb-6" />
-
+          {
+            !isGetRequest(values) ? <Textarea label="Request Body" name="request_body" rows={8} className="mb-6" /> : null
+          }
+          
           <Input label="Unique Document Field" name="document_uuid" type="String" className="mb-6" />
           <Input label="Fields to Display" name="document_fields" type="String" className="mb-6" />
           <Textarea label="Code to Transform Response Data" name="transform_response" rows={8} className="mb-24"/>
