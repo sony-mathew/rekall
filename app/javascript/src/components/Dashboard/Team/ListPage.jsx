@@ -5,7 +5,8 @@ import { Button } from "neetoui";
 export default function ListPage({
   items = [],
   setCurrrentResource,
-  showPane
+  showPane,
+  setShowDeleteAlert
 }) {
 
   return (
@@ -62,11 +63,17 @@ export default function ListPage({
                 </NavLink>
               </td>
               <td></td>
-              <td>
+              <td className="flex flex-row space-x-2">
                 <Button
                   onClick={() => { setCurrrentResource(team); showPane(true); } }
                   label=""
                   icon="ri-pencil-line"
+                />
+                <Button
+                  onClick={() => { setCurrrentResource(team); setShowDeleteAlert(true); } }
+                  label=""
+                  icon="ri-delete-bin-7-line"
+                  style="danger"
                 />
               </td>
             </tr>
