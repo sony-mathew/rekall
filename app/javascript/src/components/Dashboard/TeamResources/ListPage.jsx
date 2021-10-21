@@ -34,11 +34,11 @@ export default function ListPage({
                   </div>
                 </td>
                 <td className="flex flex-row space-x-2">
-                  <Button
+                  {/* <Button
                     onClick={() => { setCurrrentResource(teamResource); showPane(true); } }
                     label=""
                     icon="ri-pencil-line"
-                  />
+                  /> */}
                   <Button
                     onClick={() => { setCurrrentResource(teamResource); setShowDeleteAlert(true); } }
                     label=""
