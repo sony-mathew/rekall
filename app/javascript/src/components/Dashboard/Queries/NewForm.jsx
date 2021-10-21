@@ -83,7 +83,7 @@ export default function NewForm({ onClose, refetch, currentResource }) {
           <Select
             label="Query Group"
             placeholder="Select an Option"
-            isDisabled={false}
+            isDisabled={currentResource && currentResource.id}
             isClearable={true}
             isSearchable={true}
             name="query_group_id"

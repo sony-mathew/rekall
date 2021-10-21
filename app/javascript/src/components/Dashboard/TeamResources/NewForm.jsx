@@ -23,16 +23,9 @@ const preProcessObject = (resource) => {
 }
 
 const defaultValues = (currentResource) => {
-  let resourceObj = {
+  let resourceObj = currentResource || {
     resourceable_type: { value: "QueryGroup", label: "Query Group" }
   };
-
-  if (currentResource) {
-    resourceObj = {
-      resourceable_type: currentResource.resourceable_type,
-      resourceable_id: { value: currentResource.resourceable_id }
-    };
-  }
 
   return resourceObj;
 }
