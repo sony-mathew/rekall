@@ -12,7 +12,7 @@ class Api::V1::TeamResourcesController < Api::V1::BaseController
   def create
     @resource_association = @team.resource_associations.new(resourceable_params.merge(user: current_user))
     if @resource_association.save
-      render json: { team: @team, resource_association: @resource_association, notice: "#{@resource_association.resourceable_type} (#{@resource_association.resource_id}) has been added to the team!" }
+      render json: { team: @team, resource_association: @resource_association, notice: "#{@resource_association.resourceable_type} (#{@resource_association.resourceable_id}) has been added to the team!" }
     else
       render json: { error: @resource_association.errors.full_messages.to_sentence }, status: 422
     end
