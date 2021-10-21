@@ -16,11 +16,13 @@ import ListPage from "./ListPage";
 import NewPane from "./NewPane";
 import TeamMembers from "./../TeamMembers";
 import TeamResources from "./../TeamResources";
+import DeleteAlert from "./DeleteAlert";
 
 const TeamsLanding = () => {
   const [loading, setLoading] = useState(true);
   const [showPane, setshowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [teams, setTeams] = useState([]);
@@ -70,6 +72,7 @@ const TeamsLanding = () => {
             items={teams}
             setCurrrentResource={setCurrrentResource}
             showPane={setshowPane}
+            setShowDeleteAlert={setShowDeleteAlert}
           />
         </>
       ) : (
@@ -88,6 +91,13 @@ const TeamsLanding = () => {
         currentResource={currentResource}
         setCurrrentResource={setCurrrentResource}
       />
+      { showDeleteAlert && (
+        <DeleteAlert
+          selectedResource={currentResource}
+          onClose={() => setShowDeleteAlert(false)}
+          refetch={fetchTeams}
+        />
+      ) }
     </>
   );
 };
