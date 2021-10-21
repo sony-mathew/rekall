@@ -31,6 +31,7 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
 
   def destroy
     if @query_group.soft_delete
+      @query_group.team_resource_associations.map { |tra| tra.soft_delete }
       render json: { query_group: @query_group, notice: "#{@query_group.name.humanize} has been deleted from your query groups!" }
     else
       render json: { error: @query_group.errors.full_messages.to_sentence }, status: 422

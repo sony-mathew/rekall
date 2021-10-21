@@ -31,6 +31,7 @@ class Api::V1::ApiSourcesController < Api::V1::BaseController
 
   def destroy
     if @api_source.soft_delete
+      @api_source.team_resource_associations.map { |tra| tra.soft_delete }
       render json: { api_source: @api_source, notice: "#{@api_source.name.humanize} has been deleted from your sources!" }
     else
       render json: { error: @api_source.errors.full_messages.to_sentence }, status: 422

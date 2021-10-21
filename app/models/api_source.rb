@@ -2,6 +2,7 @@
 
 class ApiSource < ApplicationRecord
   belongs_to :user
+  has_many :team_resource_associations, class_name: 'TeamResource', as: 'resourceable'
 
   before_save :set_default_request
   

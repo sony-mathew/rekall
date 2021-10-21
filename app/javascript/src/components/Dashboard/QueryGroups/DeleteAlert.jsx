@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Modal } from "neetoui";
-import notesApi from "apis/notes";
+import queryGroupService from "apis/queryGroupService";
 
-export default function DeleteAlert({ refetch, onClose, selectedNoteIds }) {
+export default function DeleteAlert({ refetch, onClose, selectedResource }) {
   const [deleting, setDeleting] = useState(false);
   const handleDelete = async () => {
     try {
       setDeleting(true);
-      await notesApi.destroy({ ids: selectedNoteIds });
+      await queryGroupService.destroy(selectedResource.id);
       onClose();
       refetch();
     } catch (error) {
@@ -37,7 +37,7 @@ export default function DeleteAlert({ refetch, onClose, selectedNoteIds }) {
 
         <div className="ml-4">
           <h3 className="mb-2 text-lg font-medium text-gray-700">
-            Delete {selectedNoteIds.length} notes?
+            Delete query group : {selectedResource.name} (#{selectedResource.id})?
           </h3>
           <div className="text-sm leading-5 text-gray-500">
             Are you sure you want to continue? This cannot be undone.

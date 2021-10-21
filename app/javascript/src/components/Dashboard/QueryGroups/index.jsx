@@ -3,8 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
   useRouteMatch
 } from "react-router-dom";
 import { Button, PageLoader } from "neetoui";
@@ -17,7 +15,7 @@ import queryGroupService from "apis/queryGroupService";
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
 import QueryModel from "./../Queries";
-// import DeleteAlert from "./DeleteAlert";
+import DeleteAlert from "./DeleteAlert";
 
 const QueryGroupsLanding = () => {
   const [loading, setLoading] = useState(true);
@@ -73,6 +71,7 @@ const QueryGroupsLanding = () => {
             items={queryGroups}
             setCurrrentResource={setCurrrentResource}
             showPane={setshowPane}
+            setShowDeleteAlert={setShowDeleteAlert}
           />
         </>
       ) : (
@@ -91,13 +90,13 @@ const QueryGroupsLanding = () => {
         currentResource={currentResource}
         setCurrrentResource={setCurrrentResource}
       />
-      {/* showDeleteAlert && (
+      { showDeleteAlert && (
         <DeleteAlert
-          selectedNoteIds={selectedNoteIds}
+          selectedResource={currentResource}
           onClose={() => setShowDeleteAlert(false)}
-          refetch={fetchApiSources}
+          refetch={fetchQueryGroups}
         />
-      ) */}
+      ) }
     </>
   );
 };
