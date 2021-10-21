@@ -37,7 +37,7 @@ export default function DeleteAlert({ refetch, onClose, selectedResource }) {
 
         <div className="ml-4">
           <h3 className="mb-2 text-lg font-medium text-gray-700">
-            Delete query group : {selectedResource.name} (#{selectedResource.id})?
+            Delete api source : {selectedResource.name} (#{selectedResource.id})?
           </h3>
           <div className="text-sm leading-5 text-gray-500">
             Are you sure you want to continue? This cannot be undone.
