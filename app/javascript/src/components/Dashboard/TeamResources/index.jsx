@@ -12,6 +12,7 @@ import teamResourceService from "apis/teamResourceService";
 
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
+import DeleteAlert from "./DeleteAlert";
 
 const TeamResources = () => {
   let urlParams = useParams();
@@ -19,6 +20,7 @@ const TeamResources = () => {
   const [loading, setLoading] = useState(true);
   const [showPane, setShowPane] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
   const [team, setTeam] = useState({});
   const [teamResources, setTeamResources] = useState([]);
@@ -68,6 +70,7 @@ const TeamResources = () => {
                 setCurrrentResource={setCurrrentResource}
                 showPane={setShowPane}
                 currentResource={currentResource}
+                setShowDeleteAlert={setShowDeleteAlert}
               />
             </>
           ) : (
@@ -88,6 +91,13 @@ const TeamResources = () => {
         setCurrrentResource={setCurrrentResource}
         team={team}
       />
+      { showDeleteAlert && (
+        <DeleteAlert
+          selectedResource={currentResource}
+          onClose={() => setShowDeleteAlert(false)}
+          refetch={fetchTeamResources}
+        />
+      ) }
     </>
   );
 };
