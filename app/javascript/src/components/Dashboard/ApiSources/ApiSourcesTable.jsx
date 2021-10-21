@@ -4,7 +4,8 @@ import { Button } from "neetoui";
 export default function ApiSourcesTable({
   apiSources = [],
   setCurrrentApiSource,
-  showPane
+  showPane,
+  setShowDeleteAlert
 }) {
   return (
     <div className="w-full px-4">
@@ -30,11 +31,17 @@ export default function ApiSourcesTable({
                 </div>
               </td>
               <td>{apiSource.host}</td>
-              <td>
+              <td className="flex flex-row space-x-2">
                 <Button
                   onClick={() => { setCurrrentApiSource(apiSource); showPane(true); } }
                   label=""
                   icon="ri-pencil-line"
+                />
+                <Button
+                  onClick={() => { setCurrrentApiSource(apiSource); setShowDeleteAlert(true); } }
+                  label=""
+                  icon="ri-delete-bin-7-line"
+                  style="danger"
                 />
               </td>
             </tr>
