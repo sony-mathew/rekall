@@ -15,6 +15,7 @@ import teamService from "apis/teamService";
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
 import TeamMembers from "./../TeamMembers";
+import TeamResources from "./../TeamResources";
 
 const TeamsLanding = () => {
   const [loading, setLoading] = useState(true);
@@ -104,7 +105,7 @@ const Teams = () => {
         <TeamMembers />
       </Route>
       <Route path={`${path}/:teamId/resources`}>
-        <TeamMembers />
+        <TeamResources />
       </Route>
     </Switch>
   );
