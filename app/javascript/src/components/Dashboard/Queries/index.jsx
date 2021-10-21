@@ -17,6 +17,7 @@ import queryService from "apis/queryService";
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
 import QueryResult from "./../Results";
+import DeleteAlert from "./DeleteAlert";
 
 const QueryModel = () => {
   let { path } = useRouteMatch();
@@ -24,6 +25,7 @@ const QueryModel = () => {
 
   const [loading, setLoading] = useState(true);
   const [showPane, setShowPane] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [currentResource, setCurrrentResource] = useState(false);
 
   const [queryGroup, setQueryGroup] = useState(false);
@@ -95,7 +97,13 @@ const QueryModel = () => {
         <div className="w-full flex-1">
           <Switch>
             <Route path={`${path}/:queryId/results`}>
-              <QueryResult setCurrrentQuery={setCurrrentResource} showQueryEditPane={setShowPane} query={currentResource} scorer={scorer} queryGroup={queryGroup} />
+              <QueryResult 
+                setCurrrentQuery={setCurrrentResource} 
+                showQueryEditPane={setShowPane} 
+                setShowDeleteAlert={setShowDeleteAlert} 
+                query={currentResource} 
+                scorer={scorer} 
+                queryGroup={queryGroup} />
             </Route>
             <Route>
               <div> No query selected. </div>
@@ -110,6 +118,13 @@ const QueryModel = () => {
         currentResource={currentResource}
         setCurrrentResource={setCurrrentResource}
       />
+      { showDeleteAlert && (
+        <DeleteAlert
+          selectedResource={currentResource}
+          onClose={() => setShowDeleteAlert(false)}
+          refetch={fetchQueries}
+        />
+      ) }
     </>
   );
 };

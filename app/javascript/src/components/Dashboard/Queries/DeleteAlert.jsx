@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Modal } from "neetoui";
-import apiSourceService from "apis/apiSourceService";
+import queryService from "apis/queryService";
 
 export default function DeleteAlert({ refetch, onClose, selectedResource }) {
   const [deleting, setDeleting] = useState(false);
   const handleDelete = async () => {
     try {
       setDeleting(true);
-      await apiSourceService.destroy(selectedResource.id);
+      await queryService.destroy(selectedResource.query_group_id, selectedResource.id);
       onClose();
       refetch();
     } catch (error) {
@@ -37,7 +37,7 @@ export default function DeleteAlert({ refetch, onClose, selectedResource }) {
 
         <div className="ml-4">
           <h3 className="mb-2 text-lg font-medium text-gray-700">
-            Delete api source : {selectedResource.name}?
+            Delete query : {selectedResource.query_text}?
           </h3>
           <div className="text-sm leading-5 text-gray-500">
             Are you sure you want to continue? This cannot be undone.

@@ -40,7 +40,6 @@ export default function ListPage({
                   to={`/query_groups/${queryGroup.id}/queries`}
                   className="w-full nui-dropdown--item"
                   activeClassName="active"
-                  // onClick={e => e.target.parentElement.click()}
                 >
                   <div className="flex flex-row items-center justify-start text-gray-900">
                     {queryGroup.name}
