@@ -20,7 +20,7 @@ import resultService from "apis/resultService";
 
 import ListPage from "./ListPage";
 
-const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEditPane }) => {
+const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEditPane, setShowDeleteAlert }) => {
   let { path, url } = useRouteMatch();
   let urlParams = useParams();
 
@@ -93,6 +93,12 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
               onClick={() => { refetchResults(); } }
               label="Refetch Results"
               icon="ri-refresh-line"
+            />
+            <Button
+              onClick={() => { setShowDeleteAlert(true); } }
+              label=""
+              icon="ri-delete-bin-7-line"
+              style="danger"
             />
           </div>
         }
