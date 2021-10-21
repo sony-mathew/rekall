@@ -7,7 +7,7 @@ import { Header, SubHeader } from "neetoui/layouts";
 
 import ApiSourcesTable from "./ApiSourcesTable";
 import NewApiSourcePane from "./NewApiSourcePane";
-// import DeleteAlert from "./DeleteAlert";
+import DeleteAlert from "./DeleteAlert";
 
 const ApiSources = () => {
   const [loading, setLoading] = useState(true);
@@ -63,6 +63,7 @@ const ApiSources = () => {
             apiSources={apiSources}
             setCurrrentApiSource={setCurrrentApiSource}
             showPane={setShowApiSourcePane}
+            setShowDeleteAlert={setShowDeleteAlert}
           />
         </>
       ) : (
@@ -81,13 +82,13 @@ const ApiSources = () => {
         apiSource={currentApiSource}
         setCurrrentApiSource={setCurrrentApiSource}
       />
-      {/* showDeleteAlert && (
+      { showDeleteAlert && (
         <DeleteAlert
-          selectedNoteIds={selectedNoteIds}
+          selectedResource={currentApiSource}
           onClose={() => setShowDeleteAlert(false)}
           refetch={fetchApiSources}
         />
-      ) */}
+      ) }
     </>
   );
 };
