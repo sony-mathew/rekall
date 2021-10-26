@@ -36,9 +36,9 @@ const handleSuccessResponse = response => {
 const handleErrorResponse = (error, authDispatch) => {
   if (error.response?.status === 401) {
     authDispatch({ type: "LOGOUT" });
-    Toastr.error(error.response?.data?.error);
+    Toastr.error(error.response?.data);
   } else {
-    Toastr.error(error.response?.data?.error || error.message);
+    Toastr.error(error.response?.data);
   }
   return Promise.reject(error);
 };
