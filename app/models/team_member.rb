@@ -10,4 +10,17 @@ class TeamMember < ApplicationRecord
     viewer: 1
   }
 
+  validate :resource_uniqueness
+
+  private
+
+  def resource_uniqueness
+    if !is_deleted
+      team_member = team.member_associations.active.find_by(member: member)
+      if team_member
+        errors.add(:member_id, "(user) is already part of the team")
+      end
+    end
+  end
+
 end

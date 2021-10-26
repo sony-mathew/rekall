@@ -7,6 +7,9 @@ class TeamResource < ApplicationRecord
 
   validate :resource_uniqueness
 
+  scope :query_groups, -> { where(resourceable_type: 'QueryGroup') }
+  scope :api_sources, -> { where(resourceable_type: 'ApiSource') }
+
   private
 
   def resource_uniqueness

@@ -27,6 +27,22 @@ class User < ApplicationRecord
     role == "super_admin"
   end
 
+  def team_query_groups
+    teams.active.map do |t|
+      t.resource_associations.active.query_groups.map do |ra| 
+        ra.resourceable
+      end
+    end.flatten
+  end
+
+  def team_api_sources
+    teams.active.map do |t|
+      t.resource_associations.active.api_sources.map do |ra| 
+        ra.resourceable
+      end
+    end.flatten
+  end
+
   def as_json(options = {})
     new_options = options.merge(only: [:email, :first_name, :last_name, :current_sign_in_at])
 

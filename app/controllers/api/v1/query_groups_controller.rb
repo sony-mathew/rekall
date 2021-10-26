@@ -4,8 +4,8 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
   before_action :load_query_group, only: [:show, :update, :destroy]
 
   def index
-    query_groups = current_user.query_groups.active
-    render json: query_groups
+    query_groups = [current_user.query_groups.active + current_user.team_query_groups].uniq
+    render json: query_groups.flatten
   end
 
   def create
@@ -30,7 +30,7 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
   end
 
   def destroy
-    if @query_group.soft_delete
+    if @query_group.user.id == current_user.id && @query_group.soft_delete
       @query_group.team_resource_associations.map { |tra| tra.soft_delete }
       render json: { query_group: @query_group, notice: "#{@query_group.name.humanize} has been deleted from your query groups!" }
     else
@@ -55,6 +55,7 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
     end
 
     def load_query_group
-      @query_group = current_user.query_groups.active.find(params[:id])
+      # TODO: bring in owner/team check
+      @query_group = QueryGroup.active.find(params[:id])
     end
 end

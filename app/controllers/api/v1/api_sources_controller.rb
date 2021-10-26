@@ -4,8 +4,8 @@ class Api::V1::ApiSourcesController < Api::V1::BaseController
   before_action :load_api_source, only: [:show, :update, :destroy]
 
   def index
-    api_sources = current_user.api_sources.active
-    render json: api_sources
+    api_sources = [current_user.api_sources.active + current_user.team_api_sources].uniq
+    render json: api_sources.flatten
   end
 
   def create
@@ -30,7 +30,7 @@ class Api::V1::ApiSourcesController < Api::V1::BaseController
   end
 
   def destroy
-    if @api_source.soft_delete
+    if @api_source.user.id == current_user.id && @api_source.soft_delete
       @api_source.team_resource_associations.map { |tra| tra.soft_delete }
       render json: { api_source: @api_source, notice: "#{@api_source.name.humanize} has been deleted from your sources!" }
     else
