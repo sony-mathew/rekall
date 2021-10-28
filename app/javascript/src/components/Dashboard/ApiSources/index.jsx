@@ -20,7 +20,9 @@ const ApiSources = () => {
   
 
   useEffect(() => {
-    fetchApiSources();
+    let isMounted = true;
+    if (isMounted) fetchApiSources();
+    return () => { isMounted = false };
   }, []);
 
   const fetchApiSources = async () => {

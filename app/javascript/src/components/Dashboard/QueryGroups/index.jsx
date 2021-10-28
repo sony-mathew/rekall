@@ -28,7 +28,9 @@ const QueryGroupsLanding = () => {
   
 
   useEffect(() => {
-    fetchQueryGroups();
+    let isMounted = true;
+    if (isMounted) fetchQueryGroups();
+    return () => { isMounted = false };
   }, []);
 
   const fetchQueryGroups = async () => {

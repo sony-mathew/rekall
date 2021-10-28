@@ -27,7 +27,9 @@ const TeamMembers = () => {
   
 
   useEffect(() => {
-    fetchTeamMembers();
+    let isMounted = true;
+    if (isMounted) fetchTeamMembers();
+    return () => { isMounted = false };
   }, []);
 
   const fetchTeamMembers = async () => {

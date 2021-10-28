@@ -29,7 +29,9 @@ const TeamsLanding = () => {
   
 
   useEffect(() => {
-    fetchTeams();
+    let isMounted = true;
+    if (isMounted) fetchTeams();;
+    return () => { isMounted = false };
   }, []);
 
   const fetchTeams = async () => {
