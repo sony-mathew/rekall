@@ -34,7 +34,9 @@ const QueryModel = () => {
   
 
   useEffect(() => {
-    fetchQueries();
+    let isMounted = true;
+    if (isMounted) fetchQueries();
+    return () => { isMounted = false };
   }, []);
 
   const fetchQueries = async () => {

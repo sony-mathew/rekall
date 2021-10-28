@@ -31,7 +31,9 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
   const [userScores, setUserScores] = useState({});
 
   useEffect(() => {
-    fetchQueryResult();
+    let isMounted = true;
+    if (isMounted) fetchQueryResult();
+    return () => { isMounted = false };
   }, [url]);
 
   const fetchQueryResult = async () => {

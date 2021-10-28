@@ -15,7 +15,7 @@ class TeamMember < ApplicationRecord
   private
 
   def resource_uniqueness
-    if !is_deleted
+    if !is_deleted && new_record?
       team_member = team.member_associations.active.find_by(member: member)
       if team_member
         errors.add(:member_id, "(user) is already part of the team")

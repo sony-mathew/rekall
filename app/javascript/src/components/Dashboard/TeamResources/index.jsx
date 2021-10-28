@@ -27,7 +27,9 @@ const TeamResources = () => {
   
 
   useEffect(() => {
-    fetchTeamResources();
+    let isMounted = true;
+    if (isMounted) fetchTeamResources();
+    return () => { isMounted = false };
   }, []);
 
   const fetchTeamResources = async () => {
