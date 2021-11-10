@@ -12,8 +12,10 @@ Often times real world search systems have multiple moving parts and pipelines t
 * Ships with four default scorers: Average Precision (AP), Cumulative Gain (CG), Discounted Cumulative Gain (DCG) and Normalized Cumulative Gain (nDCG)
 
 # Wiki
-This project is bootstrapped with [bigbinary/wheel](https://github.com/bigbinary/wheel).
-You can find the high level architecture of Rekall [here](https://github.com/sony-mathew/rekall/blob/main/docs/high-level-architecture.png).
+* This project is bootstrapped with [bigbinary/wheel](https://github.com/bigbinary/wheel).
+* High level architecture of Rekall [here](https://github.com/sony-mathew/rekall/blob/main/docs/high-level-architecture.png).
+* What are scorers in Rekall? How do you write custom scorers? [here](https://github.com/sony-mathew/rekall/blob/main/docs/scorers.md)
+* How do you transform API Responses? [here](https://github.com/sony-mathew/rekall/blob/main/docs/api-response-transformations.md)
 
 (More coming soon)
 
@@ -45,30 +47,10 @@ Visit http://localhost:3000 and login with email `oliver@example.com` and passwo
 * From now onwards, we can just run `docker-compose up` from within the root of this directory to bring up the application.
 
 
-#### Build images without using cache
+#### Build docker images
 
-While re-building images, docker tries to find its layers in the cache, which might bring in stale layers.
-
-```bash
-# this forces docker to not use cached image layers
-docker-compose build --no-cache
-```
-
-More expressive docker build command with logging (for debugging purposes):
-
-```
-docker build -f ./Dockerfile.dev -t rekall-dev:1.0 --no-cache . | tee rekall.build.log
-```
-
-
-### Steps to nuke all data and start fresh
-
-If you want to try out something slightly more daring, yet effective, then run the following single line command to wipe all of the docker data including containers, images, volumes. 
-
-**Warning: The following command will wipe all of docker data of all local docker projects and containers:**
+Run the following command to build docker image:
 
 ```bash
-docker rm -f $(docker ps -a -q) && docker rmi -f $(docker images -q) && docker volume rm -f $(docker volume ls -q)
-docker-compose up --build
+docker-compose build
 ```
-Run `docker system prune -a -f --volumes` to remove all containers, networks, images (both dangling and unreferenced), and volumes.
