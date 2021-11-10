@@ -45,12 +45,3 @@ Visit http://localhost:3000 and login with email `oliver@example.com` and passwo
 * Run `docker-compose run --rm web rails setup` to create and seed the database.
 * Run `docker-compose up` to start the application and get things up and running.
 * From now onwards, we can just run `docker-compose up` from within the root of this directory to bring up the application.
-
-
-#### Build docker images
-
-Run the following command to build docker image:
-
-```bash
-docker-compose build
-```
