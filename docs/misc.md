@@ -9,7 +9,6 @@
 * Uses [ActiveAdmin](http://activeadmin.info).
 * Uses [Sidekiq](https://github.com/mperham/sidekiq).
 * Intercepts all outgoing emails in non production environment using gem [mail_interceptor](https://github.com/bigbinary/mail_interceptor).
-* Uses [SemaphoreCI](https://semaphoreci.com/) for continuous testing.
 * Uses PostgreSQL.
 * Content compression via [Rack::Deflater](https://github.com/rack/rack/blob/master/lib/rack/deflater.rb).
 * Auto-formats Ruby code with [rubocop](https://github.com/bbatsov/rubocop).
