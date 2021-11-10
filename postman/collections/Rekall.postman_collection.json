@@ -1,0 +1,1765 @@
+{
+	"info": {
+		"_postman_id": "bff46e47-647a-4b62-97fe-b7f9ba9a71bd",
+		"name": "Rekall",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API Sources",
+			"item": [
+				{
+					"name": "create source",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"environment\": \"stage\",\n    \"request\": {\n        \"headers\": {\n\n        }\n    },\n    \"host\": \"http://127.0.0.1:3000/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/api_sources",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"api_sources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get source (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/api_sources/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"api_sources",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update source",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"example 2\",\n    \"environment\": \"stage\",\n    \"request\": {\n        \"headers\": {\n\n        }\n    },\n    \"host\": \"http://127.0.0.1:3000/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/api_sources/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"api_sources",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete source",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/api_sources/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"api_sources",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list sources",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/api_sources",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"api_sources"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Queries",
+			"item": [
+				{
+					"name": "create a query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query_text\": \"blackhole\",\n    \"notes\": \"This is froma test group\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get query (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update query",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query_text\": \"supernova\",\n    \"notes\": \"A universal phenomenon\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a query",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list queries inside a group",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Query Groups",
+			"item": [
+				{
+					"name": "create query group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Query Group\",\n    \"api_source_id\": 1,\n    \"scorer_id\": 7,\n    \"http_method\": \"GET\",\n    \"page_size\": 10,\n    \"request_body\": {},\n    \"query_string\": \"?q=${query}\",\n    \"transform_response\": {},\n    \"document_fields\": [\n        \"id\",\n        \"title\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get query group (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update query group",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"World Class Query Group\",\n    \"page_size\": 15,\n    \"document_fields\": [\n        \"id\",\n        \"name\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete query group",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list query groups",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Results",
+			"item": [
+				{
+					"name": "fetch fresh results",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query_text\": \"blackhole\",\n    \"notes\": \"This is froma test group\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:query_id/results/fetch_fresh_results",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":query_id",
+								"results",
+								"fetch_fresh_results"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "query_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register score for a document in the result",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"value\": \"1\",\n    \"document_uuid\": \"hello-there\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:query_id/results/:id/register_score",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":query_id",
+								"results",
+								":id",
+								"register_score"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "query_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get query result (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:query_id/results/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":query_id",
+								"results",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "query_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update query result",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"notes\": \"supernova\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:query_id/results/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":query_id",
+								"results",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "query_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a result",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:query_id/results/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":query_id",
+								"results",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "query_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get last result for a query",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/query_groups/:query_group_id/queries/:query_id/results",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"query_groups",
+								":query_group_id",
+								"queries",
+								":query_id",
+								"results"
+							],
+							"variable": [
+								{
+									"key": "query_group_id",
+									"value": "1"
+								},
+								{
+									"key": "query_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scorers",
+			"item": [
+				{
+					"name": "create scorer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My Default Scorer\",\n    \"code\": \"<>\",\n    \"scale_type\": \"binary\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/scorers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"scorers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get scorers (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/scorers/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"scorers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update scorers",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My Default Scorer\",\n    \"code\": \"<>\",\n    \"scale_type\": \"graded\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/scorers/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"scorers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete scorers",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/scorers/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"scorers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list scorers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/scorers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"scorers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "create a team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rekall Team 2\",\n    \"description\": \"Core team working on Rekall\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/teams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get team details  (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update team info",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rekall Team 2\",\n    \"description\": \"Core team working on Rekall product to help search meisters out there\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all teams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all teams",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team Memberships",
+			"item": [
+				{
+					"name": "add a team member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"admin\",\n    \"email\": \"oliver@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/members",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"members"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get team member details  (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/members/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"members",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "defb7a0c-f241-4dff-9b10-fc5df5ae7b8a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update team membership info",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/members/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"members",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "defb7a0c-f241-4dff-9b10-fc5df5ae7b8a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove a team member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/members/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"members",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all team members",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/members",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"members"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Team Resources",
+			"item": [
+				{
+					"name": "add a team resource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"resourceable_type\": \"ApiSource\",\n    \"resourceable_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/resources",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"resources"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get team resource details  (single)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/resources/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"resources",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove a team resource",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/resources/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"resources",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								},
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all team resources",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Auth-Email",
+								"value": "{{auth_email}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/v1/teams/:team_id/resources",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"teams",
+								":team_id",
+								"resources"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
