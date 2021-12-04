@@ -166,7 +166,7 @@ def create_query_group!(options = {})
     http_method: 'GET',
     page_size: 10,
     request_body: {},
-    query_string: '/search/suggestions?q=<%= query %>',
+    query_string: '/search/suggestions?q={{ query }}',
     transform_response: '',
     document_uuid: 'name',
     document_fields: ['description', 'version'],
