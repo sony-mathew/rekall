@@ -8,6 +8,9 @@ class ApiRequestManager
   def do_post
     log_req 'POST'
     # @res = RestClient.post(formatted_uri, formatted_request_body.to_json, custom_headers.merge({ content_type: :json }))
+    puts "#*"*100
+    puts formatted_request_body.to_json
+    
     @res = RestClient::Request.execute(method: :post,
       url: formatted_uri,
       payload: formatted_request_body.to_json,

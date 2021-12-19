@@ -4,6 +4,8 @@ class Query < ApplicationRecord
   belongs_to :query_group
   belongs_to :user
   has_many :results
+
+  attr_accessor :current_api_call_response_data
   
   validates :query_text, presence: true
 
@@ -28,7 +30,9 @@ class Query < ApplicationRecord
   end
 
   def fetch_api_results
-    query_group.get_results_for(self.query_text)
+    # { raw: "raw json output of API here", formatted: "transformed output here" }
+    @current_api_call_response_data = query_group.get_results_for(self.query_text)
+    @current_api_call_response_data[:formatted]
   end
 
   def refresh_score!

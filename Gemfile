@@ -66,7 +66,7 @@ gem "letter_opener", group: :development
 gem "rest-client"
 
 # for executing javascript
-gem "mini_racer"
+gem "mini_racer", '~> 0.4.0'
 
 # for templating
 gem "liquid"

@@ -28,9 +28,17 @@ class QueryGroup < ApplicationRecord
     }
     req = ApiRequestManager.new(options)
     if http_method == 'GET'
-      formatted_response(req.do_get)
+      response_data = req.do_get
+      {
+        raw: response_data,
+        formatted: formatted_response(response_data)
+      }
     elsif http_method == 'POST'
-      formatted_response(req.do_post)
+      response_data = req.do_post
+      {
+        raw: response_data,
+        formatted: formatted_response(response_data)
+      }
     else
       []
     end

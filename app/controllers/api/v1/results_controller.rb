@@ -13,7 +13,10 @@ class Api::V1::ResultsController < Api::V1::BaseController
   def fetch_fresh_results
     @result = @query.fetch_fresh_results!
     if @result && !@result.try(:errors).present? && !(@result.is_a?(Hash) && @result[:error].present?)
-      render json: { result: @result, score: @result.try(:active_score), notice: "Fetched the latest query results!" }
+      raw_data = @query.current_api_call_response_data && @query.current_api_call_response_data[:raw]
+      response_data = { result: @result, score: @result.try(:active_score), notice: "Fetched the latest query results!" }
+      response_data.merge!(response_data: raw_data) if raw_data.presence
+      render json: response_data
     else
       render json: { error: "Some error occurred.", details: @result.try(:errors) || @result  }, status: 422
     end

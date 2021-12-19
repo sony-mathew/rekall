@@ -27,7 +27,7 @@ export default function ApiSourcesTable({
               <td> {apiSource.id} </td>
               <td>
                 <div className="flex flex-row items-center justify-start text-gray-900">
-                {apiSource.environment}  / {apiSource.name}
+                  {apiSource.name} <div className="ml-2 bg-indigo-600 bg-opacity-50 hover:bg-opacity-75 rounded py-1 px-2 text-white inline-flex">{apiSource.environment}</div>
                 </div>
               </td>
               <td>{apiSource.host}</td>
