@@ -22,6 +22,7 @@ export default function ListPage({
           <tr>
             <th> ID </th>
             <th className="text-left">Name</th>
+            <th className="text-left">Source</th>
             <th className="text-left">Method</th>
             <th className="text-left">Document Unique Field</th>
             <th className="text-left">Document Fields</th>
@@ -32,19 +33,24 @@ export default function ListPage({
           {items.map(queryGroup => (
             <tr
               key={queryGroup.id}
-              className={"cursor-pointer bg-white hover:bg-gray-50"}
+              className={"bg-white hover:bg-gray-50"}
             >
               <td> {queryGroup.id} </td>
               <td>
                 <NavLink
                   to={`/query_groups/${queryGroup.id}/queries`}
-                  className="w-full nui-dropdown--item"
+                  className="w-full nui-dropdown--item cursor-pointer no-underline hover:text-purple-900"
                   activeClassName="active"
                 >
                   <div className="flex flex-row items-center justify-start text-gray-900">
                     {queryGroup.name}
                   </div>
                 </NavLink>
+              </td>
+              <td>
+                <div className="flex flex-row items-center justify-start text-gray-900">
+                  {queryGroup.api_source.name} <div className="ml-2 bg-indigo-600 bg-opacity-50 rounded py-1 px-2 text-white inline-flex">{queryGroup.api_source.environment}</div>
+                </div>
               </td>
               <td>{queryGroup.http_method}</td>
               <td>{queryGroup.document_uuid}</td>

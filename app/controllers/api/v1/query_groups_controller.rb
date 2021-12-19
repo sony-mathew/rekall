@@ -5,7 +5,7 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
 
   def index
     query_groups = [current_user.query_groups.active + current_user.team_query_groups].uniq
-    render json: query_groups.flatten
+    render json: query_groups.flatten.as_json(include: :api_source)
   end
 
   def create
