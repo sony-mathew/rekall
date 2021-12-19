@@ -10,6 +10,6 @@ class ApiSource < ApplicationRecord
 
   private 
   def set_default_request
-    self.request = {}
+    self.request ||= {}
   end
 end

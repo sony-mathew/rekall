@@ -6,15 +6,17 @@ class ApiRequestManager
   end
 
   def do_post
+    # logging
     log_req 'POST'
-    # @res = RestClient.post(formatted_uri, formatted_request_body.to_json, custom_headers.merge({ content_type: :json }))
-    puts "#*"*100
+    puts "Headers: #{'*'*50}"
+    puts custom_headers.merge({ "content-type"=>"application/json" }).inspect
+    puts "Body: #{'*'*50}"
     puts formatted_request_body.to_json
     
     @res = RestClient::Request.execute(method: :post,
       url: formatted_uri,
       payload: formatted_request_body.to_json,
-      headers: custom_headers.merge({ content_type: :json }),
+      headers: custom_headers.merge({ "content-type"=>"application/json" }),
       verify_ssl: false
     )
     JSON.parse(@res.body)
@@ -25,7 +27,11 @@ class ApiRequestManager
   end
 
   def do_get
+    # logging
     log_req 'GET'
+    puts "Headers: #{'*'*50}"
+    puts custom_headers.inspect
+
     @res = RestClient.get(formatted_uri, custom_headers)
     JSON.parse(@res.body)
   rescue RestClient::ExceptionWithResponse => e
@@ -36,14 +42,15 @@ class ApiRequestManager
 
   private
   def custom_headers
-    {
-      accept: :json
-    }
+    default_headers = {}
+    if options[:headers].presence
+      default_headers.merge!(options[:headers])
+    end
+    default_headers
   end
 
   def log_req req_method
-    puts '#'*50
-    puts "[#{req_method}] #{formatted_uri}"
+    puts "[#{req_method}] #{formatted_uri} #{'#'*50}"
   end
 
   def formatted_uri
