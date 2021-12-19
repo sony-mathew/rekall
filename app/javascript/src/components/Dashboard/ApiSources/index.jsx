@@ -47,7 +47,7 @@ const ApiSources = () => {
         actionBlock={
           <Button
             onClick={() => { setCurrrentApiSource(false); setShowApiSourcePane(true); } }
-            label="Add New Api Source"
+            label="Create Api Source"
             icon="ri-add-line"
           />
         }
@@ -74,7 +74,7 @@ const ApiSources = () => {
           title="Looks like you don't have any Api Sources!"
           subtitle="Add your sources to send search queries to them."
           primaryAction={() => setShowApiSourcePane(true)}
-          primaryActionLabel="Add New Api Source"
+          primaryActionLabel="Create Api Source"
         />
       )}
       <NewApiSourcePane
