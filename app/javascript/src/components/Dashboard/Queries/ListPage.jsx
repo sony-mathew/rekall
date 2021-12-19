@@ -25,7 +25,13 @@ export default function ListPage({
       <table className="nui-table nui-table--checkbox">
         <thead>
           <tr>
-            <th className="text-left"> {queryGroup.name} </th>
+            <th className="text-left">
+              <Tooltip content={`Query Group`} position="bottom" minimal> 
+                <div className="text-xl font-semibold items-left justify-left"> 
+                  {queryGroup.name} 
+                </div>
+              </Tooltip>
+            </th>
           </tr>
         </thead>
         <tbody className="w-full">

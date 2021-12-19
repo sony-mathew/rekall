@@ -62,12 +62,19 @@ export default function ListPage({
       <>
         <div className="flex flex-row space-x-4 text-gray-500">
           <div className="flex-1 flex flex-col">
-            {Object.keys(allFields).map(field => {
+            {Object.keys(allFields).map((field, index) => {
               return (
-                <div key={field} className="flex flex-row space-x-4 text-gray-600 pb-4">
-                  <Tooltip content={field} position="bottom" minimal>
-                    <div>{allFields[field]}</div>
-                  </Tooltip>
+                <div className="grid grid-flow-col auto-cols-auto">
+                  <div key={field} className={`flex flex-row space-x-4 text-gray-600 pb-4 ${ index === 0 ? 'text-xl' : ''}`}>
+                    <Tooltip content={field} position="bottom" minimal>
+                      <div>{allFields[field]}</div>
+                    </Tooltip>
+                  </div>
+                  { index === 0 ? (
+                      <div className="auto-cols-max">
+                        <div className="text-xs pb-4 pt-2 text-right"> {doc[queryGroup['document_uuid']]} </div>
+                      </div>
+                    ) : null }
                 </div>
               );
             })}
@@ -127,7 +134,6 @@ export default function ListPage({
         <div key={doc[queryGroup['document_uuid']]} className="p-5 bg-white relative border border-t-0 border-r-0 border-l-0">
           <div className="text-gray-500 font-medium">
             <div>{displayFieldsFor(doc)}</div>
-            UUID: #{doc[queryGroup['document_uuid']]}
             { (showRatingPaneFor &&  showRatingPaneFor === doc) ? 
               (<div className="absolute inset-y-1 right-4">{getRatingsPanelFor(doc)}</div>)
               : ''
