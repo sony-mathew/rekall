@@ -37,14 +37,6 @@ def delete_all_records_from_all_tables
   end
 end
 
-def create_sample_data!
-  create_user! email: "oliver@example.com"
-  create_api_source!
-  create_scorers!
-  create_query_group!
-  create_queries!
-end
-
 def create_user!(options = {})
   user_attributes = { password: "welcome",
                       first_name: "Oliver",
@@ -52,18 +44,6 @@ def create_user!(options = {})
                       role: "super_admin" }
   attributes = user_attributes.merge options
   User.create! attributes
-end
-
-def create_api_source!(options = {})
-  api_source_attributes = {
-    name: 'NPM JS Search',
-    host: 'https://www.npmjs.com',
-    environment: 'production',
-    request: {},
-    user: User.first
-  }
-  attributes = api_source_attributes.merge options
-  ApiSource.create! attributes
 end
 
 def create_scorers!
@@ -158,35 +138,147 @@ def create_scorers!
   Scorer.create! attributes
 end
 
-def create_query_group!(options = {})
-  query_group_attributes = {
-    name: 'NPM JS Prod Test Query Group',
-    api_source_id: ApiSource.first.id,
-    scorer_id: Scorer.first.id,
-    http_method: 'GET',
-    page_size: 10,
-    request_body: {},
-    query_string: '/search/suggestions?q={{ query }}',
-    transform_response: '',
-    document_uuid: 'name',
-    document_fields: ['description', 'version'],
-    user: User.first
-  }
-  attributes = query_group_attributes.merge options
-  QueryGroup.create! attributes
+def create_source_seed_data!(options = {})
+  # assume the options structure to be:
+  #   { 
+  #     attributes: {}, 
+  #     query_groups: [
+  #       { 
+  #         attributes: {}, 
+  #         queries: [
+  #           { 
+  #             attributes: {} 
+  #           }, 
+  #           ...
+  #         ],
+  #       },
+  #       ...
+
+  #     ]
+  #   }
+  options[:sources].each do |source_options|
+    create_api_source!(source_options)
+  end
 end
 
-def create_queries!(options = {})
-  query_group = QueryGroup.first
-  query_texts = ['api', 'search', 'test']
-  query_texts.each do |q|
-    query_model_attributes = {
-      query_text: q,
-      notes: "#{q} - #{query_group.name}",
-      query_group: query_group,
-      user: User.first
-    }
-    attributes = query_model_attributes.merge options
-    Query.create! attributes
+def create_api_source!(options = {})
+  api_source_attributes = {
+    request: {},
+    user: User.first
+  }
+  puts options[:attributes].inspect
+  attributes = api_source_attributes.merge options[:attributes]
+  source = ApiSource.create(attributes)
+
+  if options[:query_groups].presence
+    options[:query_groups].each { |query_group_options| create_query_group!(source, query_group_options) }
   end
+end
+
+def create_query_group!(source, options)
+  query_group_attributes = {
+    api_source_id: source.id,
+    scorer_id: Scorer.first.id,
+    page_size: 10,
+    request_body: {},
+    user: User.first
+  }
+  attributes = query_group_attributes.merge options[:attributes]
+  query_group = QueryGroup.create(attributes)
+  
+  if options[:queries].presence
+    options[:queries].each { |query_options| create_query!(source, query_group, query_options) }
+  end  
+end
+
+def create_query!(source, query_group, options)
+  query_model_attributes = {
+    query_group: query_group,
+    user: User.first
+  }
+  attributes = query_model_attributes.merge options[:attributes]
+  Query.create! attributes
+end
+
+SEED_DATA_FOR_SOURCES = {
+  sources: [
+    {
+      attributes: {
+        name: 'NPM JS Search',
+        host: 'https://www.npmjs.com',
+        environment: 'production',
+        request: {}
+      },
+      query_groups: [
+        {
+          attributes: {
+            name: 'NPM JS Prod Test Query Group',
+            http_method: 'GET',
+            page_size: 10,
+            request_body: {},
+            query_string: '/search/suggestions?q={{ query }}',
+            transform_response: "var rawData = data();
+              rawData.map((doc) => Object.assign(doc, { packageLink: doc.links.npm }) )",
+            document_uuid: 'name',
+            document_fields: ['name', 'description', 'packageLink', 'version']
+          },
+          queries: [
+            {
+              attributes: { query_text: 'api'}
+            },
+            {
+              attributes: { query_text: 'test'}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      attributes: {
+        name: 'Elastic Search (local)',
+        host: 'http://localhost:9200/',
+        environment: 'development',
+        request: {}
+      },
+      query_groups: [
+        {
+          attributes: {
+            name: 'ES Query Group - Seed',
+            http_method: 'POST',
+            page_size: 10,
+            request_body: {
+              "query": {
+                "query_string": {
+                  "query": "{{ query }}"
+                }
+              },
+              "size": 10,
+              "from": 0,
+              "sort": []
+            },
+            query_string: '_search',
+            transform_response: "var rawData = data();
+              rawData['hits']['hits'].map((doc) => Object.assign(doc, doc['_source']))",
+            document_uuid: '_id',
+            document_fields: ['author_name', 'message', '_type']
+          },
+          queries: [
+            {
+              attributes: { query_text: '*'}
+            },
+            {
+              attributes: { query_text: 'test'}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+def create_sample_data!
+  create_user! email: "oliver@example.com"
+  create_scorers!
+
+  create_source_seed_data!(SEED_DATA_FOR_SOURCES)
 end
