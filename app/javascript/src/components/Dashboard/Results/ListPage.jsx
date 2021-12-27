@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Tooltip } from "neetoui";
+import { Button, Tooltip } from "neetoui";
 
 import { colorForScaleValue } from 'common/colorHelper';
+import { isValidUrl } from 'common/urlHelper';
 import resultService from "apis/resultService";
 
 export default function ListPage({
@@ -51,6 +52,22 @@ export default function ListPage({
     }
   }
 
+  const formatResultFieldDisplay = (field, fieldValue) => {
+    let formattedValue = fieldValue;
+
+    if (fieldValue === null || fieldValue === undefined || fieldValue === '') {
+      formattedValue = `No ${field}`;
+    } else if (isValidUrl(fieldValue)) {
+      formattedValue = (<a href={fieldValue} target="_blank">{fieldValue}</a>);
+    }
+
+    return (<Tooltip content={field} position="bottom" minimal>
+      <div className={ fieldValue ? '' : 'text-gray-200' }>
+        { formattedValue }
+      </div>
+    </Tooltip>);
+  }
+
   const displayFieldsFor = (doc, docIndex) => {
     let allFields = {};
     for(let i = 0; i < queryGroup['document_fields'].length; ++i) {
@@ -67,18 +84,14 @@ export default function ListPage({
           <div className="flex-1 flex flex-col">
             {Object.keys(allFields).map((field, fieldIndex) => {
               return (
-                <div className="grid grid-flow-col auto-cols-auto">
+                <div className="grid grid-flow-col auto-cols-auto" key={fieldIndex}>
                   <div key={field} className={`flex flex-row space-x-4 text-gray-600 pb-4 ${ fieldIndex === 0 ? 'text-xl' : ''}`}>
-                    <Tooltip content={field} position="bottom" minimal>
-                      <div className={ (allFields[field]) ? '' : 'text-gray-200' }>
-                        { (allFields[field]) ? allFields[field] : `No ${field}` }
-                      </div>
-                    </Tooltip>
+                    { formatResultFieldDisplay(field, allFields[field]) }
                   </div>
-                  { fieldIndex === 0 ? (
-                      <div className="auto-cols-max">
-                        <div className="text-xs pb-4 pt-2 text-right text-gray-200"> {doc[queryGroup['document_uuid']]} </div>
-                      </div>
+                    { fieldIndex === 0 ? (
+                        <div className="auto-cols-max">
+                          <div className="text-xs pb-4 pt-2 text-right text-gray-200"> {doc[queryGroup['document_uuid']]} </div>
+                        </div>
                     ) : null }
                 </div>
               );
