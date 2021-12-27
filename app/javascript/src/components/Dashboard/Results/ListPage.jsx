@@ -51,7 +51,7 @@ export default function ListPage({
     }
   }
 
-  const displayFieldsFor = (doc) => {
+  const displayFieldsFor = (doc, docIndex) => {
     let allFields = {};
     for(let i = 0; i < queryGroup['document_fields'].length; ++i) {
       const key = queryGroup['document_fields'][i];
@@ -60,19 +60,24 @@ export default function ListPage({
 
     return (
       <>
-        <div className="flex flex-row space-x-4 text-gray-500">
+        <div className="flex flex-row space-x-2 text-gray-500">
+          <div className="align-middle text-gray-200 text-xl">
+            #{docIndex + 1}
+          </div>
           <div className="flex-1 flex flex-col">
-            {Object.keys(allFields).map((field, index) => {
+            {Object.keys(allFields).map((field, fieldIndex) => {
               return (
                 <div className="grid grid-flow-col auto-cols-auto">
-                  <div key={field} className={`flex flex-row space-x-4 text-gray-600 pb-4 ${ index === 0 ? 'text-xl' : ''}`}>
+                  <div key={field} className={`flex flex-row space-x-4 text-gray-600 pb-4 ${ fieldIndex === 0 ? 'text-xl' : ''}`}>
                     <Tooltip content={field} position="bottom" minimal>
-                      <div>{allFields[field]}</div>
+                      <div className={ (allFields[field]) ? '' : 'text-gray-200' }>
+                        { (allFields[field]) ? allFields[field] : `No ${field}` }
+                      </div>
                     </Tooltip>
                   </div>
-                  { index === 0 ? (
+                  { fieldIndex === 0 ? (
                       <div className="auto-cols-max">
-                        <div className="text-xs pb-4 pt-2 text-right"> {doc[queryGroup['document_uuid']]} </div>
+                        <div className="text-xs pb-4 pt-2 text-right text-gray-200"> {doc[queryGroup['document_uuid']]} </div>
                       </div>
                     ) : null }
                 </div>
@@ -130,10 +135,10 @@ export default function ListPage({
 
   return (
     <div className="w-full flex flex-col space-y-2">
-      {items.map(doc => (
+      {items.map((doc, docIndex) => (
         <div key={doc[queryGroup['document_uuid']]} className="p-5 bg-white relative border border-t-0 border-r-0 border-l-0">
           <div className="text-gray-500 font-medium">
-            <div>{displayFieldsFor(doc)}</div>
+            <div>{displayFieldsFor(doc, docIndex)}</div>
             { (showRatingPaneFor &&  showRatingPaneFor === doc) ? 
               (<div className="absolute inset-y-1 right-4">{getRatingsPanelFor(doc)}</div>)
               : ''
