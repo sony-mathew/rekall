@@ -17,6 +17,7 @@ import queryService from "apis/queryService";
 import ListPage from "./ListPage";
 import NewPane from "./NewPane";
 import QueryResult from "./../Results";
+import Snapshot from "../Snapshots";
 import DeleteAlert from "./DeleteAlert";
 
 const QueryModel = () => {
@@ -100,6 +101,15 @@ const QueryModel = () => {
           <Switch>
             <Route path={`${path}/:queryId/results`}>
               <QueryResult 
+                setCurrrentQuery={setCurrrentResource} 
+                showQueryEditPane={setShowPane} 
+                setShowDeleteAlert={setShowDeleteAlert} 
+                query={currentResource} 
+                scorer={scorer} 
+                queryGroup={queryGroup} />
+            </Route>
+            <Route path={`${path}/:queryId/snapshots`}>
+              <Snapshot 
                 setCurrrentQuery={setCurrrentResource} 
                 showQueryEditPane={setShowPane} 
                 setShowDeleteAlert={setShowDeleteAlert} 
