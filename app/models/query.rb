@@ -4,6 +4,7 @@ class Query < ApplicationRecord
   belongs_to :query_group
   belongs_to :user
   has_many :results
+  has_many :snapshots
 
   attr_accessor :current_api_call_response_data
   

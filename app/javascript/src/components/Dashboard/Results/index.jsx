@@ -4,11 +4,12 @@ import {
   Switch,
   Route,
   Link,
+  NavLink,
   useParams,
   useRouteMatch,
   useLocation
 } from "react-router-dom";
-import { Button, PageLoader, Tooltip } from "neetoui";
+import { Button, PageLoader, Tooltip, Toastr } from "neetoui";
 import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
 import { Header, SubHeader } from "neetoui/layouts";
@@ -17,6 +18,7 @@ import { colorForBinaryRating } from 'common/colorHelper';
 import { timeSince } from "common/timeHelper";
 
 import resultService from "apis/resultService";
+import snapshotService from "apis/snapshotService";
 
 import ListPage from "./ListPage";
 
@@ -62,6 +64,21 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
     }
   }
 
+  const createSnapshot =  async () => {
+    try {
+      setLoading(true);
+      const snapshotResponse = await snapshotService.create(urlParams.queryGroupId, urlParams.queryId);
+      Toastr.success("Snapshot created successfully.");
+      // set snapshotResponse
+      // setQueryResult(resultResponse.data.result);
+      // setUserScores(resultResponse.data.score);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   if (loading) {
     return <PageLoader />;
   }
@@ -70,41 +87,61 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
       <Header
         title="Results"
         actionBlock={
-          <div className="flex flex-row space-x-4 items-center">
-            { queryResult ? (
-                <>
-                  <Tooltip content="Results Last Refreshed At" position="bottom" minimal>
-                    <div className="text-xs text-gray-400">
-                      (Updated {timeSince(new Date(queryResult.updated_at))} ago)
-                    </div>
-                  </Tooltip>
-                  <Tooltip content={`Latest Score (${scorer.name})`} position="bottom" minimal>
-                    <div className="rounded-md text-white text-xl font-semibold pr-2 pl-2 pt-0.5 pb-0.5"
-                      style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
-                      > { (queryResult.latest_score || 0.0).toFixed(2) }
-                    </div>
-                  </Tooltip>
-                </>
-              ) : null }
-            <Button
-              onClick={() => { setCurrrentQuery(query); showQueryEditPane(true); } }
-              label="Edit Query"
-              icon="ri-pencil-line"
-            />
-            <Button
-              onClick={() => { refetchResults(); } }
-              label="Refetch Results"
-              icon="ri-refresh-line"
-            />
-            <Button
-              onClick={() => { setShowDeleteAlert(true); } }
-              label=""
-              icon="ri-delete-bin-7-line"
-              style="danger"
-            />
-          </div>
+            <div className="flex flex-row space-x-4 items-center">
+              <Button
+                onClick={() => { setCurrrentQuery(query); showQueryEditPane(true); } }
+                label="Edit Query"
+                icon="ri-pencil-line"
+              />
+              <Button
+                onClick={() => { refetchResults(); } }
+                label="Refetch Results"
+                icon="ri-refresh-line"
+              />
+              <Button
+                onClick={() => { setShowDeleteAlert(true); } }
+                label=""
+                icon="ri-delete-bin-7-line"
+                style="danger"
+              />
+            </div>
         }
       />
+      
+      <div className="flex flex-row space-x-4 items-center border-gray-600 p-4 bg-gray-100">
+        <Button
+            onClick={() => { createSnapshot(); } }
+            label="Create Snapshot"
+            icon="ri-refresh-line"
+          />
+        <NavLink
+          to={`/query_groups/${urlParams.queryGroupId}/queries/${urlParams.queryId}/snapshots`}
+          className="border round p-2 pr-4 pl-4"
+        >
+          <Tooltip content={`Result Snapshots`} position="bottom" minimal>
+            <div className="rounded items-center justify-center">
+              View Snapshots &gt;
+            </div>
+          </Tooltip>
+        </NavLink>
+        { queryResult ? (
+            <>
+              <span className="border rounded-md pl-4">
+                  {scorer.name} &nbsp;&nbsp;
+                  <span className="rounded-md text-white text-xl font-semibold pr-2 pl-2 pt-1 pb-1"
+                    style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
+                  > { (queryResult.latest_score || 0.0).toFixed(2) }
+                </span>
+              </span>
+              <Tooltip content="Results Last Refreshed At" position="bottom" minimal>
+                <div className="text-xs text-gray-400">
+                  (Updated {timeSince(new Date(queryResult.updated_at))} ago)
+                </div>
+              </Tooltip>
+            </>
+          ) : null }
+      </div>
+      
       {queryResult ? (
         <>
           <ListPage

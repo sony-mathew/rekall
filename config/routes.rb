@@ -47,6 +47,12 @@ Rails.application.routes.draw do
       
       resources :query_groups, only: [:index, :create, :show, :update, :destroy] do
         resources :queries, only: [:index, :create, :show, :update, :destroy] do
+          resources :snapshots, only: [:index, :create, :show, :update, :destroy] do
+            collection do
+              post 'compare'
+            end
+          end
+          
           resources :results, only: [:index, :show, :update, :destroy] do
             collection do
               post 'fetch_fresh_results'
