@@ -8,6 +8,7 @@ import Profile from "./Account/Profile";
 import ApiSources from "./ApiSources";
 import QueryGroups from "./QueryGroups";
 import Teams from "./Team";
+import Scorers from "./Scorers";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
           <Route exact path="/my/password/edit" component={PasswordEdit} />
           <Route exact path="/my/profile" component={Profile} />
           <Route path="/query_groups" component={QueryGroups} />
+          <Route path="/scorers" component={Scorers} />
           <Route path="/teams" component={Teams} />
           <Redirect from="/" to="/api_sources" />
         </Switch>
