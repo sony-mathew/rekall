@@ -22,7 +22,10 @@ class JavascriptEvaluator
   end
 
   def result
-    context = MiniRacer::Context.new
+    # setting some basic limits
+    # timeout as 60 seconds, max_memory as 50 mb
+    context = MiniRacer::Context.new(timeout: 60_0000, max_memory: 50_000_000)
+    
 
     @params.each do |key, value|
       context.attach(key.to_s, proc{ value })
