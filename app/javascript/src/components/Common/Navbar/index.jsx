@@ -29,8 +29,9 @@ const NavBar = () => {
       </div>
       <div className="flex flex-col items-center justify-between w-full h-full">
         <div className="flex flex-col items-center justify-start w-full pt-4">
-          <NavItem title="Query Groups" link="/query_groups" icon="ri-braces-line" />
-          <NavItem title="API Sources" link="/api_sources" icon="ri-server-line" />
+          <NavItem title="Query Groups" link="/query_groups" icon="ri-code-s-slash-line" />
+          <NavItem title="API Sources" link="/api_sources" icon="ri-database-2-line" />
+          <NavItem title="Scorers" link="/scorers" icon="ri-numbers-line" />
           <NavItem title="Team" link="/teams" icon="ri-team-line" />
           <NavItem
             title="Settings"
