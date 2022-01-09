@@ -71,6 +71,9 @@ gem "mini_racer", '~> 0.4.0'
 # for templating
 gem "liquid"
 
+# for server & infra configuration
+gem 'dotenv-rails'
+
 group :development, :test do
   # Rails integration for factory-bot
   gem "factory_bot_rails"

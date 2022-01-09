@@ -4,6 +4,12 @@ ENV APP_PATH=/var/app
 ENV BUNDLE_VERSION=2.2.17
 ENV RAILS_PORT=3000
 
+ARG RAILS_SERVE_STATIC_FILES=true
+ENV RAILS_SERVE_STATIC_FILES ${RAILS_SERVE_STATIC_FILES}
+
+ARG RAILS_ENV=production
+ENV RAILS_ENV ${RAILS_ENV}
+
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
@@ -38,6 +44,15 @@ RUN rm -f Gemfile.lock
 RUN bundle lock --add-platform x86_64-linux-musl
 RUN bundle install
 RUN yarn install --check-files
+
+# creating a log directory so that image wont fail when RAILS_LOG_TO_STDOUT is false
+RUN mkdir -p /app/log
+
+# generate production assets if production environment
+RUN if [ "$RAILS_ENV" = "production" ]; then \
+  SECRET_KEY_BASE=precompile_placeholder RAILS_LOG_TO_STDOUT=enabled bundle exec rake assets:precompile \
+  && rm -rf spec node_modules tmp/cache; \
+  fi
 
 EXPOSE 3000
 
