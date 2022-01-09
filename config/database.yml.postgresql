@@ -8,20 +8,20 @@ default: &default
 
 development:
   <<: *default
-  database: rekall_development
+  database: <%= ENV['PG_DATABASE'] || 'rekall_development' %>
 
 test:
   <<: *default
-  database: rekall_test
+  database: <%= ENV['PG_DATABASE'] || 'rekall_test' %>
 
 heroku:
   <<: *default
-  database: rekall_heroku
+  database: <%= ENV['PG_DATABASE'] || 'rekall_heroku' %>
 
 staging:
   <<: *default
-  database: rekall_staging
+  database: <%= ENV['PG_DATABASE'] || 'rekall_staging' %>
 
 production:
   <<: *default
-  database: rekall_production
+  database: <%= ENV['PG_DATABASE'] || 'rekall_production' %>
