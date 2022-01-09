@@ -38,7 +38,6 @@ RUN rm -f Gemfile.lock
 RUN bundle lock --add-platform x86_64-linux-musl
 RUN bundle install
 RUN yarn install --check-files
-RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
 
