@@ -1,0 +1,27 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['PG_HOST'] %>
+  pool: 5
+  username: <%= ENV['PG_USER'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
+
+development:
+  <<: *default
+  database: <%= ENV['PG_DATABASE'] || "rekall_development" %>
+
+test:
+  <<: *default
+  database: <%= ENV['PG_DATABASE'] || "rekall_test" %>
+
+heroku:
+  <<: *default
+  database: <%= ENV['PG_DATABASE'] || "rekall_heroku" %>
+
+staging:
+  <<: *default
+  database: <%= ENV['PG_DATABASE'] || "rekall_staging" %>
+
+production:
+  <<: *default
+  database: <%= ENV['PG_DATABASE'] || "rekall_production" %>
