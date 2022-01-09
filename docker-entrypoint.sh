@@ -12,5 +12,8 @@ if [ ! -f "$database_config_path" ]; then
   cp $APP_PATH/config/database.yml.postgresql "$database_config_path"
 fi
 
+# assets precompile
+bundle exec rake assets:precompile
+
 # append bundle exec to every command
 bundle exec ${@}

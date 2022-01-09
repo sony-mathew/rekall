@@ -5,6 +5,9 @@
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = "1.0"
 
+# do not initialize app and create a db connection just for precompiling assets
+Rails.application.config.assets.initialize_on_precompile = false
+
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
