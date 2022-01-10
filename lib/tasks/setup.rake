@@ -122,10 +122,11 @@ def create_scorers!
         var topValues = allValues.sort((a, b) => (b - a)),
             idealPositionAndValues = {};
     
-        var sortedPositions = Object.keys(positionAndValues).sort();
+        var sortedPositions = Object.keys(positionAndValues).map(parseFloat).sort((a,b) => a - b);
         for(var i = 0; i < sortedPositions.length; i++){
             idealPositionAndValues[sortedPositions[i]] = topValues[i];
         }
+
         var dcg = findDcgFor(positionAndValues),
             idcg = findDcgFor(idealPositionAndValues);
         var ndcg = (dcg / idcg);
