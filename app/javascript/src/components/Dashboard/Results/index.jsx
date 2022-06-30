@@ -9,7 +9,7 @@ import {
   useRouteMatch,
   useLocation
 } from "react-router-dom";
-import { Button, PageLoader, Tooltip, Toastr } from "neetoui";
+import { Button, PageLoader, Tooltip, Toastr, Label } from "neetoui";
 import EmptyState from "components/Common/EmptyState";
 import EmptyNotesListImage from "images/EmptyNotesList";
 import { Header, SubHeader } from "neetoui/layouts";
@@ -109,6 +109,19 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
       />
       
       <div className="flex flex-row space-x-4 items-center border-gray-600 p-4 bg-gray-100">
+        { queryResult ? (
+            <>
+              <span className="flex flex-row pl-4">
+                <span className="rounded-md text-white text-xl font-semibold pr-2 pl-2 pt-1 pb-1"
+                    style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
+                  > { (queryResult.latest_score || 0.0).toFixed(2) }
+                </span>
+                <Tooltip content={`Scorer: ${scorer.name}, Updated: ${timeSince(new Date(queryResult.updated_at))} ago`} position="bottom" minimal>
+                  <i className="ri-question-line text-xl ml-2"></i>
+                </Tooltip>
+              </span>
+            </>
+          ) : null }
         <Button
             onClick={() => { createSnapshot(); } }
             label="Create Snapshot"
@@ -120,26 +133,10 @@ const QueryResult = ({ scorer, queryGroup, query, setCurrrentQuery, showQueryEdi
         >
           <Tooltip content={`Result Snapshots`} position="bottom" minimal>
             <div className="rounded items-center justify-center">
-              View Snapshots &gt;
+              Snapshots &gt;
             </div>
           </Tooltip>
         </NavLink>
-        { queryResult ? (
-            <>
-              <span className="border rounded-md pl-4">
-                  {scorer.name} &nbsp;&nbsp;
-                  <span className="rounded-md text-white text-xl font-semibold pr-2 pl-2 pt-1 pb-1"
-                    style={{backgroundColor: colorForBinaryRating(queryResult.latest_score || 0.0)}}
-                  > { (queryResult.latest_score || 0.0).toFixed(2) }
-                </span>
-              </span>
-              <Tooltip content="Results Last Refreshed At" position="bottom" minimal>
-                <div className="text-xs text-gray-400">
-                  (Updated {timeSince(new Date(queryResult.updated_at))} ago)
-                </div>
-              </Tooltip>
-            </>
-          ) : null }
       </div>
       
       {queryResult ? (

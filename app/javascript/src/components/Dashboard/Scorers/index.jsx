@@ -44,7 +44,7 @@ const Scorers = () => {
   return (
     <>
       <Header
-        title="Api Sources"
+        title="Scorers"
         actionBlock={
           <Button
             onClick={() => { setCurrentScorer(false); setShowPane(true); } }
