@@ -14,8 +14,8 @@ export default function ListPage({
           <tr>
             <th> ID </th>
             <th className="text-left">Name</th>
-            <th className="text-left">Scale</th>
             <th className="text-left">Type</th>
+            <th className="text-left">Scale</th>
             <th className="text-left">Actions</th>
           </tr>
         </thead>
