@@ -4,8 +4,8 @@ class Api::V1::QueryGroupsController < Api::V1::BaseController
   before_action :load_query_group, only: [:show, :update, :destroy]
 
   def index
-    query_groups = [current_user.query_groups.active + current_user.team_query_groups].uniq
-    render json: query_groups.flatten.as_json(include: :api_source)
+    query_groups = [current_user.query_groups.active + current_user.team_query_groups].flatten.uniq
+    render json: query_groups.as_json(include: :api_source)
   end
 
   def create

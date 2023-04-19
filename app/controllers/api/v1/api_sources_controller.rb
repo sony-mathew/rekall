@@ -4,8 +4,8 @@ class Api::V1::ApiSourcesController < Api::V1::BaseController
   before_action :load_api_source, only: [:show, :update, :destroy]
 
   def index
-    api_sources = [current_user.api_sources.active + current_user.team_api_sources].uniq
-    render json: api_sources.flatten
+    api_sources = [current_user.api_sources.active + current_user.team_api_sources].flatten.uniq
+    render json: api_sources
   end
 
   def create
